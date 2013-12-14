@@ -203,78 +203,24 @@ BigInt operator*(BigInt multiplier1, BigInt multiplier2)
     return multiplier1;
 }
 
-BigInt BigInt::operator/=(BigInt divider)
+BigInt BigInt::operator^(int degree)
 {
-    if (this->digits.size() < divider.digits.size())
+    BigInt curr(1);
+    BigInt base(*this);
+    while (degree)
     {
-        BigInt quotient;
-        *this = quotient;
-        return quotient;
-    }
-    BigInt quotient;
-    quotient.sign = this->sign ^ divider.sign;
-    quotient.digits.resize(this->digits.size() - divider.digits.size() + 1, 0);
-    //int curr = this->digits.size() - divider.digits.size() + 1;
-    BigInt remainder;
-    for (int i = 0; i < divider.digits.size(); i++)
-        remainder.digits.push_back(this->digits[this->digits.size() - divider.digits.size() + i]);
-    for (int i = this->digits.size() - divider.digits.size(); i >= 0; i--)
-    {
-        if (divider.BigIntAbs() <= remainder)
+        if (degree&1)
         {
-            int answer = 0;
-            int left = 0;
-            int right = 1000000000;
-            while (right >= left)
-            {
-                int middle((left + right)/2);
-                    if ((BigInt)middle * divider.BigIntAbs() <= remainder)
-                    {
-                        answer = middle;
-                        left = middle + 1;
-                    }
-                    else
-                    {
-                       right = middle - 1;
-                    }
-            }
-            quotient.digits[i] = answer;
+           curr *= base;
+           degree--;
         }
-        remainder = remainder - (BigInt)quotient.digits[i] * divider.BigIntAbs();
-        if (i != 0)
+        else
         {
-            remainder = remainder * (BigInt)1000000000;
-            if (remainder.digits.size())
-            remainder.digits[0] = this->digits[i - 1];
-            else
-                remainder.digits.push_back(this->digits[i - 1]);
+            base *= base;
+            degree >>= 1;
         }
     }
-    quotient.removeLeadingZeros();
-    *this = quotient;
-    return quotient;
-}
-
-BigInt operator/(BigInt dividend, BigInt divider)
-{
-    dividend /= divider;
-    return dividend;
-}
-
-BigInt BigInt::operator%=(BigInt modulo)
-{
-
-    BigInt answer = (*this) - (*this) / modulo * modulo;
-    if ((BigInt)0 > answer)
-        answer = answer + modulo;
-    *this = answer;
-    return answer;
-}
-
-BigInt operator%(BigInt number, BigInt modulo)
-{
-    number %= modulo;
-    return number;
+    return curr;
 }
 
 bool operator>(BigInt number1, BigInt number2)

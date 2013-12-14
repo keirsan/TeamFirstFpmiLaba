@@ -24,12 +24,18 @@
     <ClCompile Include="Rational.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Calc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigInt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rational.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Calc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

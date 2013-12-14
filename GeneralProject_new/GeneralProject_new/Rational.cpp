@@ -3,7 +3,7 @@
 
 #include "Rational.h"
 
-Rational::Rational(int x, int y) :a(x), b(y)
+Rational::Rational(int x, int y) :a(x), b(y), sign(false)
 {
     normalView();
 }
@@ -44,7 +44,7 @@ std::ostream& operator<<(std::ostream& out, Rational num)
 
 void Rational::normalView()
 {
-    if ((a < 0 || b < 0)&&!(a < 0 && b < 0))
+    if ((a < 0 && b > 0)||(a > 0 && b < 0))
     {
         sign = true;
         a = abs(a);
@@ -59,6 +59,7 @@ void Rational::normalView()
     if (sign)
     {
         a *= -1;
+        sign = false;
     }
 }
 

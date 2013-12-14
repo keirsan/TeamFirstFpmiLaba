@@ -21,9 +21,15 @@
     <ClCompile Include="BigInt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rational.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rational.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

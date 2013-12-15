@@ -13,12 +13,15 @@
   <ItemGroup>
     <ClCompile Include="BigInt.cpp" />
     <ClCompile Include="Calc.cpp" />
+    <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rational.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigInt.h" />
     <ClInclude Include="Calc.h" />
+    <ClInclude Include="Complex.h" />
+    <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Rational.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

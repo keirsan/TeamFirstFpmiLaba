@@ -75,11 +75,11 @@ int Dictionary::search(string value)
 	{
 		if(value < cur->value)
 		{
-			cur = cur->right;
+			cur = cur->left;
 		}
 		else if(value > cur->value)
 		{
-			cur = cur->left;
+			cur = cur->right;
 		}
 		else if(cur->value == value)
 		{

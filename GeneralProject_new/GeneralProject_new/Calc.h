@@ -38,21 +38,11 @@ class Calc
     void writeOpSecond_toStack(int &, char expressionConv[], char expression[]);
     void writeCloseBrecket(int &, char expressionConv[], char expression[]);
 
-    double searchV(char n[], bool&);
     bool reading(char expression[]);
     bool reformation(char expressionConv[]);
-    void destruct();
 
 public:
-    struct Variable
-    {
-        double value;
-        char name[100];
-        Variable * next;
-    };
-    void pushV(char V[], bool&);
-
-public:
+    void pushV(char V[], bool& isOK);
     double result(char expressionConv[]);    
 };
 

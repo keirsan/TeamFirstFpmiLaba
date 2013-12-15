@@ -11,6 +11,6 @@ int main()
     Rational a(2,3);
     Rational b(1,6);
     a = a + b;
-    cout << a;//bug: -5/6 get, 5/6 expected 
+    cout << a;
     return 0;
 }

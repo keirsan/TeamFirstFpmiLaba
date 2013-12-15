@@ -15,6 +15,49 @@ Rational operator+(Rational num1, Rational num2)
     return Rational(d, c);
 }
 
+Rational operator+(Rational num1, int num2)
+{
+    int c = num1.getB();
+    int d = num2*num1.getB() + num1.getA();
+    return Rational(d, c);
+}
+
+Rational operator+(int num2, Rational num1)
+{
+    int c = num1.getB();
+    int d = num2*num1.getB() + num1.getA();
+    return Rational(d, c);
+}
+
+Rational operator-(Rational num1, int num2)
+{
+    int c = num1.getB();
+    int d = num1.getA() - num2*num1.getB();
+    return Rational(d, c);
+}
+
+Rational operator-(int num2, Rational num1)
+{
+    int c = num1.getB();
+    int d = num2*num1.getB() - num1.getA();
+    return Rational(d, c);
+}
+
+
+Rational operator*(int num2, Rational num1)
+{
+    int c = num1.getB();
+    int d = num2*num1.getA();
+    return Rational(d, c);
+}
+
+Rational operator*(Rational num1, int num2)
+{
+    int c = num1.getB();
+    int d = num2*num1.getA();
+    return Rational(d, c);
+}
+
 Rational operator-(Rational num1, Rational num2)
 {
     int c = LCM(num1.getB(), num2.getB());

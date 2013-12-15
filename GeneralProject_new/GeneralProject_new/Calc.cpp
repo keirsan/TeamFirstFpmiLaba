@@ -1,6 +1,5 @@
 #include"Calc.h"
 
-Calc::Variable * start;
 Dictionary Var;
 
 void Calc::pushV(char V[], bool& isOK)     
@@ -52,32 +51,6 @@ void Calc::pushV(char V[], bool& isOK)
         }
     }
     Var.add((int)v, n);
-}
-
-double Calc::searchV(char n[], bool& isOK)
-{
-    Variable * cur = start;
-    while(cur)
-    {
-        if(!strcmp(cur->name, n))
-            break;
-        cur = cur->next;
-    }
-    if(cur)
-        return cur->value;
-    isOK = false;
-    return 0;
-}
-
-void Calc::destruct()
-{
-    while(start)
-    {
-        Variable * temp;
-        temp = start->next;
-        delete start;
-        start = temp;
-    }
 }
 
 //----------------------------------------------------------------------------------
@@ -516,6 +489,5 @@ double Calc::result(char expressionConv[])
         buffer.pop();
     while(operands.size())
         operands.pop();
-    destruct();
     return result;
 }

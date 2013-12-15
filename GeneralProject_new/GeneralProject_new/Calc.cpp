@@ -1,6 +1,84 @@
 #include"Calc.h"
 
+Calc::Variable * start;
 Dictionary Var;
+
+void Calc::pushV(char V[], bool& isOK)     
+{
+    isOK = false;
+    double v = 0;
+    char * n = 0;
+    bool isFirst = true;
+    for(int j = 0; V[j]; j++)
+    {            
+        if(V[j] == ' ')
+            continue;
+        if(V[j] == '=' && isFirst)
+        {
+            V[j] = ' ';
+            isFirst = false;
+            continue;
+        }
+        else if(V[j] == '=' && !isFirst)
+        {
+            cout<<"ERROR! Wrong input of variable"<<endl;
+            isOK = false;
+            break;
+        }
+        if(!isOK && isalpha(V[j]))
+        {
+            int len = 1;
+            while(isalpha(V[j + len]))
+                len++;
+            n = new char [len];
+            for(int i = 0; i < len; i++)
+            {
+                n[i] = V[j + i];
+                V[j + i] = ' ';
+            }
+            n[len] = '\0';
+            isOK = true;
+        }
+        else if(isOK && (isdigit(V[j]) || V[j] == '-'))
+        {
+            v = atof(V);
+            break;
+        }
+        else
+        {
+            isOK = false;
+            cout<<"ERROR! Wrong input of variable"<<endl;
+            break;
+        }
+    }
+    Var.add((int)v, n);
+}
+
+double Calc::searchV(char n[], bool& isOK)
+{
+    Variable * cur = start;
+    while(cur)
+    {
+        if(!strcmp(cur->name, n))
+            break;
+        cur = cur->next;
+    }
+    if(cur)
+        return cur->value;
+    isOK = false;
+    return 0;
+}
+
+void Calc::destruct()
+{
+    while(start)
+    {
+        Variable * temp;
+        temp = start->next;
+        delete start;
+        start = temp;
+    }
+}
 
 //----------------------------------------------------------------------------------
 

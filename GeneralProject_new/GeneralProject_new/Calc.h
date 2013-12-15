@@ -40,5 +40,6 @@ class Calc
     bool reformation(char expressionConv[]);
 
 public:
+    void pushV(char V[], bool& isOK);
     double result(char expressionConv[]);    
 };

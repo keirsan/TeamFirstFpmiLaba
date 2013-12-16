@@ -15,6 +15,7 @@
     <ClCompile Include="Calc.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Polynom.cpp" />
     <ClCompile Include="Rational.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +23,7 @@
     <ClInclude Include="Calc.h" />
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="Polynom.h" />
     <ClInclude Include="Rational.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

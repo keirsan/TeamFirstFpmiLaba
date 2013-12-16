@@ -2,6 +2,7 @@
 #include "BigInt.h"
 #include "Rational.h"
 #include "Calc.h"
+#include "Polynom.h"
 using namespace std;
 
 // For try, that I won't brake anything

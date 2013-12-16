@@ -33,9 +33,9 @@ void Dictionary::add(int key, string value)
 
 	else 
 	{
-		while((cur->right != 0 && cur->left != 0) || cur->key != key)
+		while((cur->right != 0 && cur->left != 0) || cur->value != value)
 		{
-			if(key > cur->key)
+			if(value > cur->value)
 			{
 				if(cur->right == 0)
 				{
@@ -49,7 +49,7 @@ void Dictionary::add(int key, string value)
 				}
 				else cur = cur->right;
 			}
-			if(key < cur->key)
+			if(value < cur->value)
 			{
 				if(cur->left == 0)
 				{
@@ -67,9 +67,8 @@ void Dictionary::add(int key, string value)
 	}
 }
 
-int Dictionary::search(string value)
+int Dictionary::search(string value, bool& isOK)
 {
-	int flag = 0;
 	Node *cur = root;
 	while(cur)
 	{
@@ -82,13 +81,10 @@ int Dictionary::search(string value)
 			cur = cur->right;
 		}
 		else if(cur->value == value)
-		{
 			return cur->key;
-			flag = 1;
-			break;
-		}
 	}
-	if(flag == 0) cout << "no element" << endl;
+    isOK = false;
+    return 0;
 }
 
 void Dictionary::show(Node *root, int level)

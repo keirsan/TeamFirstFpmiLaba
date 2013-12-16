@@ -242,7 +242,7 @@ void Calc::use_Variable(int & start, char expression[])
         i++;
     }
     n[i] = '\0';
-    double value = Var.search(n);
+    double value = Var.search(n, isOK);
     if(!isOK)
     {
         cout<<"ERROR! You input indefenite variable!"<<endl;

@@ -2,11 +2,13 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-
+#include "Calc.h"
 class Test
 {
 public:
+    Test();
     Test(string,string);
+    void testingProcess();
     void check(int);
     ~Test();
 private:

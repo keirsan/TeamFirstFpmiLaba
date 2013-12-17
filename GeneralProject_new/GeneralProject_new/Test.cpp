@@ -5,6 +5,7 @@ using namespace std;
 
 #include "Test.h"
 
+Test::Test(){}
 
 Test::Test(string in, string out)
 {
@@ -40,6 +41,21 @@ void Test::check(int num)
         cout <<num<< " - Pass"<<endl;
     else cout <<num<< " - Fail"<<endl;
 
+}
+
+void Test::testingProcess()
+{
+    cout << "Tests:\n";
+    for (int i = 1; i <= 3; i++)
+    {
+        string s = to_string(i);
+        Test test("input" + s + ".txt", "result" + s + ".txt");
+        Calc a;
+        char zz[100];
+        cin >> zz;
+        cout << a.result(zz) << endl;
+        test.check(i);
+    }   
 }
 
 Test::~Test()

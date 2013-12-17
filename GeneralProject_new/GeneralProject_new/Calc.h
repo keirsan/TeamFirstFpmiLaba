@@ -1,5 +1,5 @@
 // Объяснение , как работает класс, вконце
-
+#pragma once
 #include<iostream>
 #include<stack>
 #include<cstring>

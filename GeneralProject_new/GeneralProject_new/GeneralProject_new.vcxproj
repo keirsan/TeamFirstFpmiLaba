@@ -17,6 +17,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Polynom.cpp" />
     <ClCompile Include="Rational.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigInt.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Polynom.h" />
     <ClInclude Include="Rational.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AA224E52-0007-4C07-B7AB-7D9E8BF1F3C9}</ProjectGuid>

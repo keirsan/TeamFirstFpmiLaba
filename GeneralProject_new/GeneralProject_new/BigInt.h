@@ -27,6 +27,8 @@ public:
     BigInt operator^(int degree);
     friend bool operator>(BigInt number1, BigInt number2);
     friend bool operator<=(BigInt number1, BigInt number2);
+    long long getLongLong();
+    int getInt();
 };
 BigInt operator+(BigInt summand1, BigInt summand2);
 BigInt operator-(BigInt minuend, BigInt subtrahend);

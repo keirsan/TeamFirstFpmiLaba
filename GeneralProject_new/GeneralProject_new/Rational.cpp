@@ -81,7 +81,7 @@ Rational operator^(Rational num1, int power)
 
 std::ostream& operator<<(std::ostream& out, Rational num)
 {
-    out << num.getA() << "/" << num.getB() << std::endl;
+    out << num.getA() << "/" << num.getB();// << std::endl;
     return out;
 }
 
@@ -114,6 +114,11 @@ int Rational::getA() const
 int Rational::getB() const
 {
     return b;
+}
+
+double Rational::getDouble()
+{
+    return (double)(sign ? -1 : 1) * a / b; 
 }
 
 int LCM(int x, int y)

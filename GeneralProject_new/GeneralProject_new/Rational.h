@@ -18,6 +18,7 @@ public:
     Rational(int, int);
     int getA() const;
     int getB() const;
+    double getDouble();
     ~Rational();
     
 private:

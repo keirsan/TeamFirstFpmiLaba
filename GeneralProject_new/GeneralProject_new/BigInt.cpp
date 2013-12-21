@@ -31,7 +31,9 @@ BigInt::BigInt(string& input)
     }
 
     removeLeadingZeros();
+
 }
+
 
 BigInt::BigInt(int input)
 {
@@ -268,6 +270,30 @@ BigInt BigInt::BigIntAbs()
     BigInt abs = *this;
     abs.sign = false;
     return abs;
+}
+
+long long BigInt::getLongLong()
+{
+    long long answer = (digits.size() ? digits[0]:0) + (digits.size()>1 ? digits[1]:0)*1000000000;
+    if (digits.size()>2 && digits[2]<5)
+        answer += 1000000000000000000*digits[2];
+    if (sign)
+        answer *= -1;
+    //if (digits.size()>3 || (digits.size()==3  && digits[2] > 4))
+        // ERROR!!!!!!!
+    return answer;
+}
+
+int BigInt::getInt()
+{
+    int answer = (digits.size() ? digits[0]:0);
+    if (digits.size()>1 && digits[1]<3)
+        answer += 1000000000*digits[1];
+    if (sign)
+        answer *= -1;
+    //if (digits.size()>2 || (digits.size()==2  && digits[1] > 2))
+        // ERROR!!!!!!!
+    return answer;
 }
 
 ostream & operator<<(ostream&  out, BigInt & number)

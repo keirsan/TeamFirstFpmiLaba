@@ -28,6 +28,7 @@
     <ClInclude Include="Operations.h" />
     <ClInclude Include="Polynom.h" />
     <ClInclude Include="Rational.h" />
+    <ClInclude Include="stack.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

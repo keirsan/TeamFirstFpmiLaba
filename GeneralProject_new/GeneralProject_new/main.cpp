@@ -5,6 +5,7 @@
 #include "Polynom.h"
 #include "Test.h"
 #include "Operations.h"
+#include "stack.h"
 
 using namespace std;
 

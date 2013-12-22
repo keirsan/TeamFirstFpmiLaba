@@ -46,7 +46,7 @@ void Test::check(int num)
 void Test::testingProcess()
 {
     cout << "Tests:\n";
-    for (int i = 1; i <= 3; i++)
+    for (int i = 1; i <= 18; i++)
     {
         string s = to_string(i);
         Test test("input" + s + ".txt", "result" + s + ".txt");

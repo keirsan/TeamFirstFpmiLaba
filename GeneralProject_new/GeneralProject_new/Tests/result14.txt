@@ -1,0 +1,2 @@
+Error! Amount of operands less than amount of operations
+0

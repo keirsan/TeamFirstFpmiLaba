@@ -26,6 +26,7 @@ public:
     BigInt operator*=(BigInt multiplier);
     BigInt operator^(int degree);
     friend bool operator>(BigInt number1, BigInt number2);
+    friend bool operator<(BigInt number1, BigInt number2);
     friend bool operator<=(BigInt number1, BigInt number2);
     long long getLongLong();
     int getInt();

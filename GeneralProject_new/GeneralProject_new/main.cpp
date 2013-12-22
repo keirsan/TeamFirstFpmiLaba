@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "BigInt.h"
 #include "Rational.h"
 #include "Calc.h"
@@ -12,6 +13,7 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+    
     // process command line arguments
     if (argc > 1)
     {

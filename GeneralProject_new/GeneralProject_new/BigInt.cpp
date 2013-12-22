@@ -245,6 +245,11 @@ bool operator>(BigInt number1, BigInt number2)
     return false;
 }
 
+bool operator<(BigInt number1, BigInt number2)
+{
+    return (number2 > number1);
+}
+
 bool operator<=(BigInt number1, BigInt number2)
 {
     if (number1.sign && !number2.sign)

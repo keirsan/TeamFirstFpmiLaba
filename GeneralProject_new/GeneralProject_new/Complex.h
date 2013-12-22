@@ -77,7 +77,21 @@ public:
 template <class type1>
 ostream & operator<<(ostream&  out, Complex<type1> & number)
 {
-    out << number.re << "+" << number.im <<"i";  
+    bool isPrinted = false;
+    if (number.re > 0 || number.re < 0)
+    {
+        isPrinted = true;
+        out << number.re;
+        if (number.im > 0)
+                out << "+";
+    }
+    if (number.im > 0 || number.im < 0)
+    {
+        isPrinted = true;
+        out << number.im << "i";
+    }
+    if (!isPrinted)
+        out << 0;
     return out;
 }
 //---------------------------------------------------------------------------------------

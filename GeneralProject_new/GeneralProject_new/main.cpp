@@ -13,19 +13,18 @@ using namespace std;
 int main(int argc, char * argv[])
 {
     // process command line arguments
-    if (argc>1)
+    if (argc > 1)
     {
         if (argc == 2 && !strcmp(argv[1], "-tests"))
         {
             Test testing;
-            testing.testingProcess();            
+            testing.testingProcess();
             system("pause");
             return 0;
         }
-        cout<<"Use -tests to run tests."<<endl;
+        cout << "Use -tests to run tests." << endl;
         return 0;
     }
-
     // run calculator
     while (true)
     {

@@ -53,6 +53,19 @@ Rational operator-(int num2, Rational num1)
     return Rational(d, c);
 }
 
+bool operator<(Rational rat, int num)
+{
+    Rational temp = rat - num;
+    if (temp.getA() < 0) return true;
+    else return false;
+}
+
+bool operator>(Rational rat, int num)
+{
+    Rational temp = rat - num;
+    if (temp.getA() > 0) return true;
+    else return false;
+}
 
 Rational operator*(int num2, Rational num1)
 {

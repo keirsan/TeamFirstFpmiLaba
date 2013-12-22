@@ -8,12 +8,16 @@
 #include "Operations.h"
 #include "stack.h"
 #include "Complex.h"
+#include "Polynom.h"
 
 using namespace std;
 
 int main(int argc, char * argv[])
 {
     
+    Polynom x(2,5);
+    cout << x.polValue(2);
+
     // process command line arguments
     if (argc > 1)
     {

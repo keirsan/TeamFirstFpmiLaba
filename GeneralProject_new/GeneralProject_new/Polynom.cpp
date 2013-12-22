@@ -3,7 +3,7 @@
 
 Polynom::Polynom()
 {
-    for(int i = 0; i < 10000; i++)
+    for(int i = 0; i < 1000; i++)
         coeff[i] = 0;
     degree = 0;
 }
@@ -12,15 +12,23 @@ Polynom::Polynom(double value)
 {
     degree = 0;
     coeff[0] = value;
-    for (int i = 1; i < 10000; i++)
+    for (int i = 1; i < 1000; i++)
         coeff[i] = 0;
 }
 
 Polynom::Polynom(const Polynom& pol)
 {
     degree = pol.degree;
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 1000; i++)
         coeff[i] = pol.coeff[i];
+}
+
+Polynom::Polynom(int deg, int val)
+{
+    degree = deg;
+    for (int i = 0; i < 1000; i++)
+        coeff[i] = 0;
+    coeff[deg] = val;
 }
 
 void Polynom::setPolynom(int deg)
@@ -59,24 +67,7 @@ void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
     degree = pol1.degree + pol2.degree;
 
 }
-void Polynom::division(const Polynom& pol1, const Polynom& pol2)
-{
-    Polynom quot;
-    Polynom rem(pol1);
-    quot.degree = rem.degree - pol2.degree;
-    
-    while (rem.degree >= pol2.degree)
-    {
-        quot.coeff[rem.degree - pol2.degree] = rem.coeff[rem.degree]/pol2.coeff[pol2.degree];
-        Polynom temp;
-	    temp.coeff[rem.degree - pol2.degree] = rem.coeff[rem.degree]/pol2.coeff[pol2.degree];
-        Polynom temp2;
-        temp2.mult(temp, pol2); 
-	    rem -= temp2;
-    }
-    *this = quot;
 
-}
 void Polynom::operator=(const Polynom& pol)
 {
     degree = pol.degree;
@@ -159,69 +150,7 @@ void Polynom::operator*=(const Polynom& pol)
 
     *this = prod;
 }
-Polynom Polynom::operator/(const Polynom& pol)
-{
-    Polynom quot;
-    Polynom rem;
-    rem = *this;
-    quot.degree = rem.degree - pol.degree;
-    
-    while (rem.degree >= pol.degree)
-    {
-        quot.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-        Polynom temp;
-	    temp.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-	    rem = rem - (temp * pol);
-    }
-    return quot;
- }
 
-void Polynom::operator/=(const Polynom& pol)
-{
-    Polynom quot;
-    Polynom rem;
-    rem = *this;
-    quot.degree = rem.degree - pol.degree;
-    
-    while (rem.degree >= pol.degree)
-    { 
-        quot.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-        Polynom temp;
-	    temp.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-	    rem = rem - (temp * pol);
-    }
-
-    *this = quot;
- }
-
-Polynom Polynom::operator%(const Polynom& pol)
-{
-    Polynom rem;
-    rem = *this;
-    
-    while (rem.degree >= pol.degree)
-    {
-        Polynom temp;
-	    temp.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-	    rem = rem - (temp * pol);
-    }
-return rem;
- }
-
-void Polynom::operator%=(const Polynom& pol)
-{
-    Polynom rem;
-    rem = *this;
-    
-    while (rem.degree >= pol.degree)
-    {
-        Polynom temp;
-	    temp.coeff[rem.degree - pol.degree] = rem.coeff[rem.degree]/pol.coeff[pol.degree];
-	    rem = rem - (temp * pol);
-    }
-
-    *this = rem;
- }
 double& Polynom::operator[](int i)
 {
     if((i < 0) || (i >= 10000))

@@ -13,6 +13,7 @@ class Rational
     friend Rational operator-(int, Rational);
     friend Rational operator*(Rational, int);
     friend Rational operator*(int, Rational);
+    friend Rational operator<(Rational, int);    
     friend std::ostream& operator<<(std::ostream&, Rational);
 public:
     Rational();

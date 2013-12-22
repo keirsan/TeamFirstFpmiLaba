@@ -94,6 +94,10 @@ std::ostream& operator<<(std::ostream& out, Rational num)
     out << num.getA() << "/" << num.getB();// << std::endl;
     return out;
 }
+Rational operator<(Rational, int)
+{
+
+}
 
 void Rational::normalView()
 {

@@ -8,6 +8,16 @@ Rational::Rational(int x, int y) :a(x), b(y), sign(false)
     normalView();
 }
 
+Rational::Rational(int x) :a(x), b(1), sign(false)
+{
+    normalView();
+}
+
+Rational::Rational() :a(0), b(1), sign(false)
+{
+    normalView();
+}
+
 Rational operator+(Rational num1, Rational num2)
 {
     int c = LCM(num1.getB(), num2.getB());

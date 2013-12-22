@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "Rational.h"
 
 using namespace std;
 
@@ -80,4 +81,10 @@ Complex <type1> Complex <type1> :: operator*(Complex &c)
 	temp.re = re * c.re - im * c.im;
 	temp.im = re * c.im + im * c.re;
 	return temp;
+}
+
+template <class type1>
+void Complex <type1> :: show()
+{
+    cout << re << " + " << im << "i" <<endl;
 }

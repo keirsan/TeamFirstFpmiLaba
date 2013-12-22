@@ -15,6 +15,8 @@ class Rational
     friend Rational operator*(int, Rational);
     friend std::ostream& operator<<(std::ostream&, Rational);
 public:
+    Rational();
+    Rational(int);
     Rational(int, int);
     int getA() const;
     int getB() const;

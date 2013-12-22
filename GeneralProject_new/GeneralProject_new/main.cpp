@@ -6,6 +6,7 @@
 #include "Test.h"
 #include "Operations.h"
 #include "stack.h"
+#include "Complex.h"
 
 using namespace std;
 

@@ -26,29 +26,6 @@ int main(int argc, char * argv[])
         return 0;
     }
 
-    int a = 4;
-    BigInt b = 123456789;
-    Rational c(15,4);
-    double d = 3.14;
-
-    cout << "!!!" << endl;
-    cout << a + a << endl;
-    cout << a + b << endl;
-    cout << a + c << endl;
-    cout << a + d << endl;
-    cout << b + a << endl;
-    cout << b + b << endl;
-    cout << b + c << endl;
-    cout << b + d << endl;
-    cout << c + a << endl;
-    cout << c + b << endl;
-    cout << c + c << endl;
-    cout << c + d << endl;
-    cout << d + a << endl;
-    cout << d + b << endl;
-    cout << d + c << endl;
-    cout << d + d << endl;
-
     // run calculator
     while (true)
     {

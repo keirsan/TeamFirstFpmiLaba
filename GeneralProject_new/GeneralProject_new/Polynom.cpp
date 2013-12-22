@@ -26,7 +26,7 @@ Polynom::Polynom(const Polynom& pol)
 Polynom::Polynom(int deg, int val)
 {
     degree = deg;
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < deg; i++)
         coeff[i] = 0;
     coeff[deg] = val;
 }
@@ -41,9 +41,27 @@ void Polynom::setPolynom(int deg)
 
 void Polynom::getPolynom()
 {
+    bool isPrinted = false;
     for(int i = degree; i >= 0; i--)
-        std::cout << coeff[i] << " ";
-    std::cout << std::endl;
+        if (coeff[i]!=0)
+        {
+        if (isPrinted && coeff[i]>=0)
+            std::cout << "+";
+        if (coeff[i] != -1 && coeff[i] != 1)
+            std::cout << coeff[i];
+        else
+        {
+            if (coeff[i] == -1)
+                i==0 ? std::cout << -1 :std::cout << "-";
+            if (coeff[i] == 1 && i == 0)
+                std::cout << 1;
+        }
+        if (i != 0)
+            std::cout << "x^"<<i;
+        isPrinted = true;
+        }
+    if (!isPrinted)
+        std::cout << 0;
     return;
 }
 

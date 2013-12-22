@@ -15,8 +15,9 @@ using namespace std;
 int main(int argc, char * argv[])
 {
     
-    Polynom x(2,5);
-    cout << x.polValue(2);
+    Polynom x(3,5);
+    x.setPolynom(10);
+    x.getPolynom();
 
     // process command line arguments
     if (argc > 1)

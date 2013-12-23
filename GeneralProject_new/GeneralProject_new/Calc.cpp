@@ -71,7 +71,8 @@ void Calc::recording_toStack(int &start, char expression[])	// push number in st
 			isFirstFullStop = false;
         }
 	}
-	buffer.push(atof(expression));
+    Polynom x(atof(expression));
+	buffer.push(x);
 	for(int k = 0; k < len; k++)
 		expression[start + k] = ' ';
 	start += len - 1;
@@ -88,7 +89,7 @@ void Calc::oper_mult(int &start, char expression[])	// multiplication
     }
 	else
 	{
-		double arg1 = buffer.top();
+		Polynom arg1 = buffer.top();
 		buffer.pop();
 		if(buffer.size() == 0)
         {
@@ -97,12 +98,11 @@ void Calc::oper_mult(int &start, char expression[])	// multiplication
         }
 		else
 		{
-			double arg2 = buffer.top();
+			Polynom arg2 = buffer.top();
 			buffer.pop();
-			double result = arg2 * arg1;
+			Polynom result = arg2 * arg1;
 			buffer.push(result);
-			for(int i = 0; i < 3; i++)
-		    	expression[start] = ' ';
+		    expression[start] = ' ';
 		}
 	}
 }
@@ -116,7 +116,7 @@ void Calc::oper_pow(int &start, char expression[])
     }
 	else
 	{
-		double arg1 = buffer.top();
+		Polynom arg1 = buffer.top();
 		buffer.pop();
 		if(buffer.size() == 0)
         {
@@ -124,21 +124,13 @@ void Calc::oper_pow(int &start, char expression[])
             cout<<"Error! Amount of operands less than amount of operations"<<endl;
         }
 		else
-		{
-            if(arg1 == 0)
-            {
-                isOK = false;
-                cout<<"Error! You can't devide by 0"<<endl;
-            }
-            else
-            {
-		    	double arg2 = buffer.top();
-		    	buffer.pop();
-		    	double result = pow(arg2,arg1);
-		    	buffer.push(result);
-		    	for(int i = 0; i < 3; i++)
-		        	expression[start] = ' ';
-            }
+        {
+            Polynom arg2 = buffer.top();
+            buffer.pop();
+            Polynom result = arg2;//^arg1;
+            buffer.push(result);
+            for(int i = 0; i < 3; i++)
+                expression[start] = ' ';
 		}
 	}
 }
@@ -152,7 +144,7 @@ void Calc::oper_addit(int &start, char expression[])	// addition
     }
 	else
 	{
-		double arg1 = buffer.top();
+		Polynom arg1 = buffer.top();
 		buffer.pop();
 		if(buffer.size() == 0)
         {
@@ -161,12 +153,11 @@ void Calc::oper_addit(int &start, char expression[])	// addition
         }
 		else
 		{
-			double arg2 = buffer.top();
+			Polynom arg2 = buffer.top();
 			buffer.pop();
-			double result = arg2 + arg1;
+			Polynom result = arg2 + arg1;
 			buffer.push(result);
-			for(int i = 0; i < 3; i++)
-			    expression[start] = ' ';
+            expression[start] = ' ';
 		}
 	}
 }
@@ -180,7 +171,7 @@ void Calc::oper_subtr(int &start, char expression[])	// subtraction
     }
 	else
 	{
-		double arg1 = buffer.top();
+		Polynom arg1 = buffer.top();
 		buffer.pop();
 		if(buffer.size() == 0)
         {
@@ -189,9 +180,9 @@ void Calc::oper_subtr(int &start, char expression[])	// subtraction
         }
 		else
 		{
-			double arg2 = buffer.top();
+			Polynom arg2 = buffer.top();
 			buffer.pop();
-			double result = arg2 - arg1;
+			Polynom result = arg2 - arg1;
 			buffer.push(result);
 			for(int i = 0; i < 3; i++)
 		    	expression[start] = ' ';
@@ -223,7 +214,8 @@ void Calc::realiseBinOper(int start, char expression[])
     }
 	else
 	{
-		double result = (-1) * buffer.top();
+        Polynom sign(-1);
+		Polynom result = sign * buffer.top();
         buffer.pop();
         buffer.push(result);
 	}
@@ -248,7 +240,8 @@ void Calc::use_Variable(int & start, char expression[])
         cout<<"ERROR! You input indefenite variable!"<<endl;
         return;
     }
-    buffer.push(value);
+    Polynom x(value);
+    buffer.push(x);
     start += i - 1;
 }
 
@@ -264,6 +257,12 @@ bool Calc::reading(char expression[])	//find numbers, functions & operations in 
 			continue;
         else if((expression[i] >= '0') && (expression[i] <= '9'))
             recording_toStack(i, expression);
+        else if(expression[i] == 'x')
+        {
+            Polynom x(1, 1);
+            buffer.push(x);
+            expression[i] = ' ';
+        }
         else if(isalpha(expression[i]))
             use_Variable(i, expression);
         else if(expression[i] == '*' || expression[i] == '+' || expression[i] == '-' || expression[i] == '^')
@@ -299,9 +298,18 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
         expression[point++] = '_';
         operands.pop();
     }
+    if(expressionConv[start] == 'x')
+    {
+        expression[point++] = 'x';
+        expressionConv[start] = '*';
+        writeOpFirst_toStack(start, expressionConv, expression);
+    }
+    else if(expressionConv[start] == '/')
+        expression[point++] = '/';
+    else
+        start--;
     expression[point] = ' ';
     point++;
-    start--;
 }
 
 //---------------------------------------
@@ -409,7 +417,12 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
                 continue;
         }
         else if((expressionConv[i] >= '0') && (expressionConv[i] <= '9'))
-            inputNumbers(i, expressionConv, expression);
+            inputNumbers(i, expressionConv, expression);            
+        else if(expressionConv[i] == 'x')
+        {
+            expression[point++] = ' ';
+            expression[point++] = 'x';
+        }
         else if(isalpha(expressionConv[i]))
         {
             expression[point++] = expressionConv[i];
@@ -476,10 +489,10 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
     return isOK;
 }
 
-double Calc::result(char expressionConv[])
+Polynom Calc::result(char expressionConv[])
 {
     isOK = reformation(expressionConv);
-    double result = 0;
+    Polynom result(0);
     if(isOK && buffer.size())
     {
         result = buffer.top();

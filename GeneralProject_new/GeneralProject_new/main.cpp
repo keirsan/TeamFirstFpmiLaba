@@ -15,9 +15,8 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-
-    Complex<int> gg(1,2);
-    CBase& lol=gg;
+    /* Complex<int> gg(1, 2);
+     CBase& lol = gg;*/
 
     // process command line arguments
     if (argc > 1)
@@ -29,8 +28,22 @@ int main(int argc, char * argv[])
             system("pause");
             return 0;
         }
-        cout << "Use -tests to run tests." << endl;
-        return 0;
+        if (argc == 3)
+        {
+            Test flow(argv[1],argv[2]);
+            if (flow.inStatus()&&flow.outStatus(argv[2]))
+            {
+                Calc a;
+                char * str = new char[];
+                cin >> str;
+                cout << a.result(str) << endl;
+            }
+            else{
+                cout << "Wrong command line parameters." << endl;
+            }
+            return 0;
+        }
+        
     }
     // run calculator
     while (true)

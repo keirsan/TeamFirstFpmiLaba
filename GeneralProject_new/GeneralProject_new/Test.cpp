@@ -11,10 +11,38 @@ Test::Test(string in, string out)
 {
     backup = std::cout.rdbuf();
     ifs.open("C:\\Users\\Nikita\\Documents\\GitHub\\TeamFirstFpmiLaba\\GeneralProject_new\\GeneralProject_new\\Tests\\"+in);
-    cin.rdbuf(ifs.rdbuf());
-    ofs.open("C:\\Users\\Nikita\\Documents\\GitHub\\TeamFirstFpmiLaba\\GeneralProject_new\\GeneralProject_new\\Tests\\"+out);
-    cout.rdbuf(ofs.rdbuf());
+    if (inStatus2()&&outStatus2(out))
+    {
+        cin.rdbuf(ifs.rdbuf());
+        ofs.open("C:\\Users\\Nikita\\Documents\\GitHub\\TeamFirstFpmiLaba\\GeneralProject_new\\GeneralProject_new\\Tests\\" + out);
+        cout.rdbuf(ofs.rdbuf());
+    }
+}
 
+bool Test::inStatus()
+{
+    if (ifs.is_open())
+    {
+        return true;
+    }
+    else
+    {
+        cout << "Wrong input parameter. This should be an existing txt file in Tests directory." << endl;
+        return false;
+    }
+}
+
+bool Test::outStatus(string txt)
+{
+    int len = strlen(txt.c_str());
+    int k = 0;
+    for (int i = 0; i < len;i++)
+    if (!strcmp(txt.c_str() + i, ".txt"))
+        k++;
+    if (k == 1)
+        return true;
+    cout << "Wrong output parameter. Should be `name`.txt ." << endl;
+    return false;
 }
 
 void Test::check(int num)
@@ -64,4 +92,28 @@ Test::~Test()
     ifs.close();
     if (ofs.is_open())
     ofs.close();
+}
+
+bool Test::inStatus2()
+{
+    if (ifs.is_open())
+    {
+        return true;
+    }
+    else
+    {       
+        return false;
+    }
+}
+
+bool Test::outStatus2(string txt)
+{
+    int len = strlen(txt.c_str());
+    int k = 0;
+    for (int i = 0; i < len; i++)
+    if (!strcmp(txt.c_str() + i, ".txt"))
+        k++;
+    if (k == 1)
+        return true;
+    return false;
 }

@@ -9,25 +9,15 @@
 #include "stack.h"
 #include "Complex.h"
 #include "Polynom.h"
+#include "CBase.h"
 
 using namespace std;
 
 int main(int argc, char * argv[])
 {
-    
-    Polynom x(3,5);
-    x.setPolynom(3);
-    x.getPolynom();
-    cout << endl;
 
-    Polynom y(3,5);
-    y.setPolynom(2);
-    y.getPolynom();
-    cout << endl;
-
-    x.substitution(y);
-    x.getPolynom();
-    cout << endl;
+    Complex<int> gg(1,2);
+    CBase& lol=gg;
 
     // process command line arguments
     if (argc > 1)

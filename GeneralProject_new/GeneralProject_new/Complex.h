@@ -2,11 +2,12 @@
 #include <iostream>
 #include "BigInt.h"
 #include "Rational.h"
+#include "CBase.h"
 
 using namespace std;
 
 template <class type1> 
-class Complex
+class Complex:public CBase
 {
 	type1 re;
 	type1 im;
@@ -14,6 +15,33 @@ class Complex
 	Complex add1(Complex &c);
 	Complex add2(Complex &c);
 public:
+    virtual void getComplex(char & Type, int & Ci1,int & Ci2, BigInt & Cb1, BigInt & Cb2, Rational & Cr1, Rational & Cr2, double & Cd1, double & Cd2)
+    {
+        if (typeid(re).name() == "int")
+        {
+            Type = 'I';
+            Ci1 = re;
+            Ci2 = im;
+        }
+        if (typeid(re).name() == "BigInt")
+        {
+            Type = 'B';
+            Cb1 = (BigInt)re;
+            Cb2 = (BigInt)im;
+        }
+        if (typeid(re).name() == "Rational")
+        {
+            Type = 'R';
+            Cr1 = re;
+            Cr2 = im;
+        }
+        if (typeid(re).name() == "double")
+        {
+            Type = 'D';
+            Cd1 = re;
+            Cd2 = im;
+        }
+    }
 	Complex();
 	Complex(type1 r, type1 i);
 	Complex(type1 r);
@@ -73,6 +101,7 @@ public:
     friend Complex<BigInt> operator*(Complex<BigInt> c1, Complex<BigInt> c2);
     friend Complex<int> operator*(Complex<int> c1, Complex<int> c2);
 };
+
 
 template <class type1>
 ostream & operator<<(ostream&  out, Complex<type1> & number)

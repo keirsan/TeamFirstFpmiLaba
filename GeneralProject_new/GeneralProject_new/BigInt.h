@@ -16,7 +16,10 @@ public:
     BigInt(long long input);
     BigInt();
     BigInt(BigInt & number);
-    
+    BigInt(double lol)
+    {
+        ;
+    }
     friend ostream & operator<<(std::ostream & os, BigInt & number);
     friend istream & operator>>(std::istream & is, BigInt & number);
     BigInt BigIntAbs();

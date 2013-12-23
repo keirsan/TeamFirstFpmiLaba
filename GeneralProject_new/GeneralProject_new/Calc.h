@@ -6,7 +6,6 @@
 
 #include"Dictionary.h"
 #include"Polynom.h"
-//#include"Operations.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 class Polynom
 {
 private:
-    double coeff[1000];
+    int/*double*/ coeff[1000];
     int degree;
 public:
     Polynom();
@@ -20,7 +20,8 @@ public:
     void operator-=(const Polynom&);
     Polynom operator*(const Polynom&);
     void operator*=(const Polynom&);
-    double& operator[](int);
+    Polynom substitution(Polynom);
+    int& operator[](int);
     friend std::ostream& operator<<(std::ostream&, const Polynom&);//how to do this weird function?
     friend std::istream& operator>>(std::istream&, Polynom&);
 };

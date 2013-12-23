@@ -3,7 +3,7 @@
 
 Polynom::Polynom()
 {
-    for(int i = 0; i < 1000; i++)
+    for(int i = 0; i < 100; i++)
         coeff[i] = 0;
     degree = 0;
 }
@@ -26,7 +26,7 @@ Polynom::Polynom(const Polynom& pol)
 Polynom::Polynom(int deg, int val)
 {
     degree = deg;
-    for (int i = 0; i < deg; i++)
+    for (int i = 0; i < 1000; i++)
         coeff[i] = 0;
     coeff[deg] = val;
 }
@@ -89,7 +89,7 @@ void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
 void Polynom::operator=(const Polynom& pol)
 {
     degree = pol.degree;
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 1000; i++)
         coeff[i] = pol.coeff[i];
 }
 Polynom Polynom::operator+(const Polynom& pol)
@@ -165,11 +165,10 @@ void Polynom::operator*=(const Polynom& pol)
 		for(int j=0; j <= degree;j++)
 			prod.coeff[i+j] += (pol.coeff[i]*coeff[j]);
     prod.degree =degree + pol.degree;
-
     *this = prod;
 }
 
-double& Polynom::operator[](int i)
+int& Polynom::operator[](int i)
 {
     if((i < 0) || (i >= 10000))
         std::cout << "Please, don't try to break my cute program((((" << std::endl;
@@ -190,4 +189,19 @@ std::ostream& operator<<(std::ostream& o, const Polynom& pol)
         o << pol.coeff[i]<<" ";
 
     return o;
+}
+
+Polynom Polynom::substitution(Polynom value)
+{
+    Polynom temp(0,1);
+    Polynom answer;
+    ;
+    for (int i = 0; i <= degree; i++)
+    {
+        Polynom curr(0, coeff[i]);
+        answer += temp * curr;
+        temp *= value;
+    }
+    *this = answer;
+    return answer;
 }

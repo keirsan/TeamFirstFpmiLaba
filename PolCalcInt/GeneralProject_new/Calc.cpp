@@ -300,10 +300,13 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
         expression[point++] = '_';
         operands.pop();
     }
-    if (expressionConv[start] != 'x' || (expressionConv[start - 1] != 'x' && ((expressionConv[start] >= '0') && (expressionConv[start] <= '9')) ) )
-    expression[point] = ' ';
-    point++;
-    start--;
+    if (expressionConv[start] != 'x' || (expressionConv[start - 1] != 'x' && ((expressionConv[start] >= '0') && (expressionConv[start] <= '9'))))
+    {
+        expression[point] = ' ';        
+        start--;
+        point++;
+    }
+    
 }
 
 //---------------------------------------

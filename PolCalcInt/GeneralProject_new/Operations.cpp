@@ -161,9 +161,9 @@ Polynom atoP(char* input)
     double ss;
     double dd;
     if (XXX)
-    for (i = 0, p = 0; true; i++)
+    for (i = 0, p = 0; true; i++,p++)
     {
-        if (input[i] == 'x'&&input[i - 1] >= '0'&&input[i - 1] <= '9')
+        if (stroka[i] == 'x'&&stroka[i - 1] >= '0'&&stroka[i - 1] <= '9')
         {   
             int k;
             for (k = 0; stroka[i]; k++,i++)
@@ -177,7 +177,7 @@ Polynom atoP(char* input)
             continue;
         }*/
         degree[p] = stroka[i];
-        p++;
+        
     }
     else{
         dd = atof(stroka);

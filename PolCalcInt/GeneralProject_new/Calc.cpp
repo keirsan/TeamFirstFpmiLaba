@@ -449,18 +449,19 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             bool xixi = false; int end;
             for (int k = i+1; expressionConv[k]; k++)
             {
-                if (expressionConv[k] == ')'&&expressionConv[k + 1] == '\0')
+                if (expressionConv[k] == '+'||expressionConv[k] == '*'||expressionConv[k] == '-'||expressionConv[k] == '^')
                 {
-                    if (expressionConv[k] == '+'&&expressionConv[k] == '*'&&expressionConv[k] == '-'&&expressionConv[k] == '^')
-                        break;
-                    //if (!(expressionConv[k] >= '0'&&expressionConv[k] <= '9')) break;
+                    xixi = false;
+                    break;
+                }
+                if (expressionConv[k] == ')'&&expressionConv[k + 1] == '\0')
+                {                   
                     end = k;
                     xixi = true;
                     break;
                 }
                                
             }
-            cout << xixi<<endl;
             if (xixi)
             {
                 expressionConv[end] = '\0';

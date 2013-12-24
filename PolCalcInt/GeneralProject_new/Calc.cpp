@@ -300,7 +300,7 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
         expression[point++] = '_';
         operands.pop();
     }
-    if (expressionConv[start] != 'x' || (expressionConv[start - 1] != 'x' && ((expressionConv[start] >= '0') && (expressionConv[start] <= '9'))))
+    if ((expressionConv[start] != 'x' && expressionConv[start + 1] != '^' && !(expressionConv[start - 1] == 'x' && expressionConv[start] == '^'&&expressionConv[start+1] >= '0'&&expressionConv[start+1] <= '9')) || (expressionConv[start - 1] != 'x' && ((expressionConv[start] >= '0') && (expressionConv[start] <= '9'))))
     {
         expression[point] = ' ';        
         start--;
@@ -436,12 +436,19 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
         }        
         else if(expressionConv[i] == '^')
         {
-            if(operands.size() != 0 && operands.top() == '^')
+            if (expressionConv[i - 1] == 'x')
             {
-                expression[point++] = operands.top();
-                operands.pop();
+                ;
             }
-            operands.push(expressionConv[i]);
+            else
+            {
+                if (operands.size() != 0 && operands.top() == '^')
+                {
+                    expression[point++] = operands.top();
+                    operands.pop();
+                }
+                operands.push(expressionConv[i]);
+            }
         }        
         else if(expressionConv[i] == '*')
             writeOpFirst_toStack(i, expressionConv, expression);

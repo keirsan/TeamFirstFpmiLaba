@@ -9,7 +9,6 @@
 #include "Operations.h"
 #include "stack.h"
 #include "Complex.h"
-#include "Polynom.h"
 
 using namespace std;
 

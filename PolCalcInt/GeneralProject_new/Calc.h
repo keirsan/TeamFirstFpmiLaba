@@ -5,7 +5,7 @@
 #include<cstring>
 #include<math.h>
 #include<ctype.h>
-#include "Polynom.h"
+
 #include "Dictionary.h"
 #include "Operations.h"
 

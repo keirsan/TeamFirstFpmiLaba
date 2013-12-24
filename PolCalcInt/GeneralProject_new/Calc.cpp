@@ -59,7 +59,7 @@ void Calc::recording_toStack(int &start, char expression[])	// push number in st
 {
 	int len;	// length of quantity
 	bool isFirstFullStop = true;	// is full stop in double firstly received
-	for(len = 0; ((expression[start + len] >= '0') && (expression[start + len] <= '9')) || (expression[start + len] == '.'); len++)
+    for (len = 0; ((expression[start + len] >= '0') && (expression[start + len] <= '9')) || (expression[start + len] == 'x') || (expression[start + len] == '.'); len++)
 	{
 		if(expression[start + len] == '.')
         {
@@ -72,6 +72,7 @@ void Calc::recording_toStack(int &start, char expression[])	// push number in st
         }
 	}
 	buffer.push(atoP(expression));
+    
 	for(int k = 0; k < len; k++)
 		expression[start + k] = ' ';
 	start += len - 1;
@@ -288,7 +289,7 @@ bool Calc::reading(char expression[])	//find numbers, functions & operations in 
 
 void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
 {
-	while(((expressionConv[start] >= '0') && (expressionConv[start] <= '9')) || (expressionConv[start] == '.'))
+	while(((expressionConv[start] >= '0') && (expressionConv[start] <= '9')||(expressionConv[start] == 'x')) || (expressionConv[start] == '.'))
 	{
 		expression[point] = expressionConv[start];
         start++;
@@ -299,6 +300,7 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
         expression[point++] = '_';
         operands.pop();
     }
+    if (expressionConv[start] != 'x' || (expressionConv[start - 1] != 'x' && ((expressionConv[start] >= '0') && (expressionConv[start] <= '9')) ) )
     expression[point] = ' ';
     point++;
     start--;
@@ -408,7 +410,7 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             else
                 continue;
         }
-        else if((expressionConv[i] >= '0') && (expressionConv[i] <= '9'))
+        else if ((expressionConv[i] >= '0') && (expressionConv[i] <= '9')||(expressionConv[i] == 'x'))
             inputNumbers(i, expressionConv, expression);
         /*else if (expressionConv[i] == 'x')
         {
@@ -449,17 +451,21 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             {
                 if (expressionConv[k] == ')'&&expressionConv[k + 1] == '\0')
                 {
+                    if (expressionConv[k] == '+'&&expressionConv[k] == '*'&&expressionConv[k] == '-'&&expressionConv[k] == '^')
+                        break;
+                    //if (!(expressionConv[k] >= '0'&&expressionConv[k] <= '9')) break;
                     end = k;
                     xixi = true;
                     break;
                 }
-                if (!(expressionConv[k] >= '0'&&expressionConv[k] <= '9')) break;               
+                               
             }
+            cout << xixi<<endl;
             if (xixi)
             {
                 expressionConv[end] = '\0';
-                xe = atof(expressionConv + i+1);
-                expressionConv[i] = '\0';
+                xe = atof(expressionConv + i + 1);
+                expressionConv[i] = '\0';         
                 break;
             }
             else

@@ -23,7 +23,6 @@
   <ItemGroup>
     <ClInclude Include="BigInt.h" />
     <ClInclude Include="Calc.h" />
-    <ClInclude Include="CBase.h" />
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Operations.h" />

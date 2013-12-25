@@ -873,35 +873,9 @@ o >> pol.coeff[i];
 return o;
 }
 */
-    
+
 std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
-    // TEMPORARY
-    /*if (pol.coefI)
-    {
-    bool isPrinted = false;
-    for(int i = pol.degree; i >= 0; i--)
-        if (pol.coefI[i]    !=0)
-        {
-            if (isPrinted && coeff[i]>=0)
-                std::cout << "+";
-            if (coeff[i] != -1 && coeff[i] != 1)
-                std::cout << coeff[i];
-            else
-            {
-                if (coeff[i] == -1)
-                    i==0 ? std::cout << -1 :std::cout << "-";
-                if (coeff[i] == 1 && i == 0)
-                    std::cout << 1;
-            }
-            if (i != 0)
-                std::cout << "x^"<<i;
-            isPrinted = true;
-        }
-        if (!isPrinted)
-            std::cout << 0;
-        return;
-    }*/
     if (pol.coefI)
     {
         out << *pol.coefI;
@@ -916,11 +890,11 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
     {
         out << *pol.coefR;
         return out;
+    }
         if (pol.coefD)
     {
         out << *pol.coefD;
         return out;
-    }
     }
 
 }

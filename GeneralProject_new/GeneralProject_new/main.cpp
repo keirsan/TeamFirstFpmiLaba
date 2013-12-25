@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "BigInt.h"
 #include "Rational.h"
 #include "Calc.h"
@@ -14,6 +15,7 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+    
     /* Complex<int> gg(1, 2);
      CBase& lol = gg;*/
 
@@ -45,14 +47,23 @@ int main(int argc, char * argv[])
         
     }
     // run calculator
+    int counter = 0;
+    Dictionary dict;
     while (true)
     {
+        counter++;
+        cout << "In[" << counter << "]:=";
         Calc a;
         char * str = new char[];
         cin >> str;
         if (str[0] == 'e')
             break;
-        cout << a.result(str) << endl;
+        Polynom ans = a.result(str).polValue();
+        stringstream ss;
+        ss << ans;
+        string strr = ss.str();
+        dict.add(counter, strr);
+        cout << "Out[" << counter << "]=" << ans << endl;
     }
 
     return 0;

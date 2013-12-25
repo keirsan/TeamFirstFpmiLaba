@@ -14,6 +14,10 @@ class Complex
     Complex add1(Complex &c);
     Complex add2(Complex &c);
 public:
+    type1 getRe()
+    {
+        return re;
+    }
     Complex();
     Complex(type1 r, type1 i);
     Complex(type1 r);

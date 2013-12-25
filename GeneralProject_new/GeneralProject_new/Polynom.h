@@ -32,7 +32,8 @@ public:
     Polynom(int deg, int val);
     /*void getPolynom();
     void setPolynom(int);*/
-    Polynom polValue();/*
+    Polynom polValue();
+    /*string getString();/*
     void mult(const Polynom&,  const Polynom& );
     void operator=(const Polynom&);
     Polynom operator+(const Polynom&);

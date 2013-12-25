@@ -2,6 +2,8 @@
 #include "Polynom.h"
 #include "BigInt.h"
 
+int Polynom::x = INT_MAX;
+
 Polynom::Polynom(Complex<int> value, int deg)
 {
     coefI = new Complex<int>[1000];
@@ -56,6 +58,66 @@ Polynom::Polynom(Complex<double> value, int deg)
     coefB = 0;
     coefR = 0;
 }
+
+Polynom::Polynom(Complex<int> value, int deg, int xx)
+{
+    coefI = new Complex<int>[1000];
+    for (int i = 0; i < 1000; i++)
+        coefI[i] = 0;
+
+    coefI[deg] = value;
+    degree = deg;
+    coefB = 0;
+    coefR = 0;
+    coefD = 0;
+    x = xx;
+}
+
+Polynom::Polynom(Complex<BigInt> value, int deg, int xx)
+{
+    coefB = new Complex<BigInt>[1000];
+    BigInt zero(0);
+    Complex<BigInt> Czero(zero, zero);
+    for (int i = 0; i < 1000; i++)
+        coefB[i] = Czero;
+
+    coefB[deg] = value;
+    degree = deg;
+    coefI = 0;
+    coefR = 0;
+    coefD = 0;
+    x = xx;
+}
+
+Polynom::Polynom(Complex<Rational> value, int deg, int xx)
+{
+    coefR = new Complex<Rational>[1000];
+    Rational zero(0);
+    for (int i = 0; i < 1000; i++)
+        coefR[i] = zero;
+
+    coefR[deg] = value;
+    degree = deg;
+    coefI = 0;
+    coefB = 0;
+    coefD = 0;
+    x = xx;
+}
+
+Polynom::Polynom(Complex<double> value, int deg, int xx)
+{
+    coefD = new Complex<double>[1000];
+    for (int i = 0; i < 1000; i++)
+        coefD[i] = 0;
+
+    coefD[deg] = value;
+    degree = deg;
+    coefI = 0;
+    coefB = 0;
+    coefR = 0;
+    x = xx;
+}
+
 
 Polynom Polynom::operator+(Polynom summand)
 {
@@ -517,14 +579,16 @@ Polynom Polynom::operator*(Polynom summand)
     }
 }
 
-/*
+
 Polynom::Polynom()
 {
-for(int i = 0; i < 100; i++)
-coeff[i] = 0;
-degree = 0;
+    coefI = 0;
+    coefB = 0;
+    coefR = 0;
+    coefD = 0;
+    degree = 0;
 }
-*/
+
 Polynom::Polynom(double value)
 {
     degree = 0;
@@ -580,20 +644,76 @@ isPrinted = true;
 if (!isPrinted)
 std::cout << 0;
 return;
-}
+}*/
 
-double Polynom::polValue(double value)
+Polynom Polynom::polValue()
 {
-double temp = 1;
-double result = 0;
-for(int i = 0; i <= degree;i++)
-{
-result += coeff[i] * temp;
-temp *= value;
+    if (coefI)
+    {
+        Complex<int> tempC(0, 0);
+        Complex<int> tempC1(1, 0);
+        int temp = 1;
+        Polynom result(tempC, 0);
+        for(int i = 0; i <= degree;i++)
+        {
+            Complex<int> tmp(temp, 0);
+            Complex<int> add = coefI[i] * tmp;
+            Polynom addP(add,0);
+            result = result + addP;
+            temp *= x;
+        }
+        return result;
+    }
+    if (coefB)
+    {
+        Complex<BigInt> tempC(0, 0);
+        Complex<BigInt> tempC1(1, 0);
+        int temp = 1;
+        Polynom result(tempC, 0);
+        for(int i = 0; i <= degree;i++)
+        {
+            Complex<int> tmp(temp, 0);
+            Complex<BigInt> add = coefB[i] * tmp;
+            Polynom addP(add,0);
+            result = result + addP;
+            temp *= x;
+        }
+        return result;
+    }
+    if (coefR)
+    {
+        Complex<Rational> tempC(0, 0);
+        Complex<Rational> tempC1(1, 0);
+        int temp = 1;
+        Polynom result(tempC, 0);
+        for(int i = 0; i <= degree;i++)
+        {
+            Complex<int> tmp(temp, 0);
+            Complex<Rational> add = coefR[i] * tmp;
+            Polynom addP(add,0);
+            result = result + addP;
+            temp *= x;
+        }
+        return result;
+    }
+    if (coefD)
+    {
+        Complex<int> tempC(0, 0);
+        Complex<double> tempC1(1, 0);
+        int temp = 1;
+        Polynom result(tempC, 0);
+        for(int i = 0; i <= degree;i++)
+        {
+            Complex<int> tmp(temp, 0);
+            Complex<double> add = coefD[i] * tmp;
+            Polynom addP(add,0);
+            result = result + addP;
+            temp *= x;
+        }
+        return result;
+    }
 }
-return result;
-}
-
+/*
 void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
 {
 for(int i=0;i <= pol1.degree;i++)
@@ -700,12 +820,56 @@ o >> pol.coeff[i];
 return o;
 }
 */
-std::ostream& operator<<(std::ostream& o, const Polynom& pol)
+    
+std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
-    for ( int i = pol.degree; i >= 0; i--)
-        o << pol.coeff[i]<<" ";
+    // TEMPORARY
+    /*if (pol.coefI)
+    {
+    bool isPrinted = false;
+    for(int i = pol.degree; i >= 0; i--)
+        if (pol.coefI[i]    !=0)
+        {
+            if (isPrinted && coeff[i]>=0)
+                std::cout << "+";
+            if (coeff[i] != -1 && coeff[i] != 1)
+                std::cout << coeff[i];
+            else
+            {
+                if (coeff[i] == -1)
+                    i==0 ? std::cout << -1 :std::cout << "-";
+                if (coeff[i] == 1 && i == 0)
+                    std::cout << 1;
+            }
+            if (i != 0)
+                std::cout << "x^"<<i;
+            isPrinted = true;
+        }
+        if (!isPrinted)
+            std::cout << 0;
+        return;
+    }*/
+    if (pol.coefI)
+    {
+        out << pol.coefI;
+        return out;
+    }
+    if (pol.coefB)
+    {
+        out << pol.coefB;
+        return out;
+    }
+    if (pol.coefR)
+    {
+        out << pol.coefR;
+        return out;
+        if (pol.coefD)
+    {
+        out << pol.coefD;
+        return out;
+    }
+    }
 
-    return o;
 }
 /*
 Polynom Polynom::substitution(Polynom value)

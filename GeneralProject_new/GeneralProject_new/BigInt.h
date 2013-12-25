@@ -23,7 +23,7 @@ public:
     friend ostream & operator<<(std::ostream & os, BigInt & number);
     friend istream & operator>>(std::istream & is, BigInt & number);
     BigInt BigIntAbs();
-    BigInt operator=(BigInt equal);
+    BigInt operator=(const BigInt & equal);
     BigInt operator+=(BigInt summand);
     BigInt operator-=(BigInt subtrahend);
     BigInt operator*=(BigInt multiplier);

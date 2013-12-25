@@ -41,8 +41,8 @@ BigInt::BigInt(int input)
     input = abs(input);
     while (input > 0)
     {
-    digits.push_back(input%1000000000);
-    input /= 1000000000;
+        digits.push_back(input%1000000000);
+        input /= 1000000000;
     }
 }
 
@@ -52,8 +52,8 @@ BigInt::BigInt(long long input)
     input = abs(input);
     while (input > 0)
     {
-    digits.push_back(input%1000000000);
-    input /= 1000000000;
+        digits.push_back(input%1000000000);
+        input /= 1000000000;
     }
 }
 
@@ -86,7 +86,7 @@ int max(int x, int y)
     else return y;
 }
 
-BigInt BigInt::operator=(BigInt equal)
+BigInt BigInt::operator=(const BigInt & equal)
 {
     this->sign = equal.sign;
     this->digits.resize(equal.digits.size());
@@ -219,8 +219,8 @@ BigInt BigInt::operator^(int degree)
     {
         if (degree&1)
         {
-           curr *= base;
-           degree--;
+            curr *= base;
+            degree--;
         }
         else
         {
@@ -291,7 +291,7 @@ long long BigInt::getLongLong()
     if (sign)
         answer *= -1;
     //if (digits.size()>3 || (digits.size()==3  && digits[2] > 4))
-        // ERROR!!!!!!!
+    // ERROR!!!!!!!
     return answer;
 }
 
@@ -303,7 +303,7 @@ int BigInt::getInt()
     if (sign)
         answer *= -1;
     //if (digits.size()>2 || (digits.size()==2  && digits[1] > 2))
-        // ERROR!!!!!!!
+    // ERROR!!!!!!!
     return answer;
 }
 

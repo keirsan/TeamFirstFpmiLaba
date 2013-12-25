@@ -431,8 +431,8 @@ Complex <type1> ::Complex(type1 r, type1 i)
 template <class type1>
 Complex <type1> ::Complex(type1 i)
 {
-    re = 0;
-    im = i;
+    re = i;
+    im = 0;
 }
 
 template <class type1>

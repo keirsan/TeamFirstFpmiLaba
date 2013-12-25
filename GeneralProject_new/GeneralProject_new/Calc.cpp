@@ -59,7 +59,7 @@ void Calc::recording_toStack(int &start, char expression[])	// push number in st
 {
 	int len;	// length of quantity
 	bool isFirstFullStop = true;	// is full stop in double firstly received
-    for (len = 0; ((expression[start + len] >= '0') && (expression[start + len] <= '9')) || (expression[start + len] == 'x') || (expression[start + len] == '.'); len++)
+    for (len = 0; ((expression[start + len] >= '0') && (expression[start + len] <= '9')) || (expression[start + len] == 'x') || (expression[start + len] == '/') || (expression[start + len] == '.'); len++)
 	{
 		if(expression[start + len] == '.')
         {
@@ -289,11 +289,12 @@ bool Calc::reading(char expression[])	//find numbers, functions & operations in 
 
 void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
 {
-	while(((expressionConv[start] >= '0') && (expressionConv[start] <= '9')||(expressionConv[start] == 'x')) || (expressionConv[start] == '.'))
+    while (((expressionConv[start] >= '0') && (expressionConv[start] <= '9') || (expressionConv[start] == 'x')|| (expressionConv[start] == '/'))  || (expressionConv[start] == '.'))
 	{
 		expression[point] = expressionConv[start];
         start++;
 		point++;
+        _CrtDumpMemoryLeaks();
 	}
     if(operands.size() != 0 && operands.top() == '_')
     {
@@ -413,7 +414,7 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             else
                 continue;
         }
-        else if ((expressionConv[i] >= '0') && (expressionConv[i] <= '9')||(expressionConv[i] == 'x'))
+        else if ((expressionConv[i] >= '0') && (expressionConv[i] <= '9') || (expressionConv[i] == 'x') || (expressionConv[i] == '/'))
             inputNumbers(i, expressionConv, expression);
         /*else if (expressionConv[i] == 'x')
         {
@@ -520,8 +521,10 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
         operands.pop();        
     }
     expression[point++] = '\0';
-    if(isOK)
-        isOK = reading(expression);
+    if (isOK)
+    {
+        isOK = reading(expression); 
+    }
     else
         cout<<"ERROR! You input wrong expression! You put brackets incorrectly"<<endl;
     return isOK;
@@ -535,7 +538,7 @@ double getX()
 Polynom Calc::result(char expressionConv[])
 {
     isOK = reformation(expressionConv);
-    Polynom result;
+    Polynom result; 
     if(isOK && buffer.size())
     {
         result = buffer.top();

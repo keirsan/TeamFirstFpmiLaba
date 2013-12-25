@@ -294,7 +294,7 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
 		expression[point] = expressionConv[start];
         start++;
 		point++;
-        _CrtDumpMemoryLeaks();
+        //_CrtDumpMemoryLeaks();
 	}
     if(operands.size() != 0 && operands.top() == '_')
     {

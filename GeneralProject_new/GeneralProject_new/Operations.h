@@ -1,6 +1,8 @@
 #pragma once
 #include "Rational.h"
 #include "BigInt.h"
+#include "Polynom.h"
+#include "Calc.h"
 // int BigInt Rational double
 
 //int BigInt
@@ -35,3 +37,7 @@ double operator-(Rational number1, double number2);
 double operator-(double number1, Rational number2);
 double operator*(Rational number1, double number2);
 double operator*(double number1, Rational number2);
+
+
+Polynom atoP(char*);
+

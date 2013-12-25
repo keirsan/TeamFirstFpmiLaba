@@ -57,6 +57,12 @@ BigInt::BigInt(long long input)
     }
 }
 
+inline int max(int x, int y)
+{
+    if (x > y) return x;
+    else return y;
+}
+
 BigInt::BigInt()
 {
     sign = false;
@@ -80,11 +86,7 @@ void BigInt::removeLeadingZeros()
         this->sign = false;
 }
 
-int max(int x, int y)
-{
-    if (x > y) return x;
-    else return y;
-}
+
 
 BigInt BigInt::operator=(const BigInt & equal)
 {

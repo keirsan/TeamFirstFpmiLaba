@@ -106,30 +106,118 @@ double operator*(double number1, BigInt number2)
 
 double operator+(Rational number1, double number2)
 {
-    return number1.getDouble() + number2; 
+    return number1.getDouble() + number2;
 }
 
 double operator+(double number1, Rational number2)
 {
-    return number2.getDouble() + number1; 
+    return number2.getDouble() + number1;
 }
 
 double operator-(Rational number1, double number2)
 {
-    return number1.getDouble() - number2; 
+    return number1.getDouble() - number2;
 }
 
 double operator-(double number1, Rational number2)
 {
-    return number1 - number2.getDouble(); 
+    return number1 - number2.getDouble();
 }
 
 double operator*(Rational number1, double number2)
 {
-    return number1.getDouble() * number2; 
+    return number1.getDouble() * number2;
 }
 
 double operator*(double number1, Rational number2)
 {
-    return number1 * number2.getDouble(); 
+    return number1 * number2.getDouble();
+}
+
+Polynom atoP(char* input)
+{
+    char stroka[10000];
+    int i; int p; bool XXX = false;
+    for (i = 0, p = 0; true; i++)
+    {
+        if (input[i] == ' '&&((input[i - 1] >= '0'&&input[i - 1] <= '9') || input[i - 1] == 'x'))
+        {
+            break;
+        }
+        if (input[i] == ' ')
+        {
+            continue;
+        }
+        if (input[i] == 'x')
+        {
+            XXX = true;
+        }
+        stroka[p] = input[i];
+        p++;
+    }
+    stroka[p] = '\0';
+    char degree[50] = "0";
+
+    //double ss;
+    Complex<int> ss(1);
+    double dd;
+    if (XXX)
+    for (i = 0, p = 0; true; i++, p++)
+    {
+        if (stroka[i] == 'x'&&(stroka[i - 1] >= '0'&&stroka[i - 1] <= '9')&&stroka[i + 1] != '\0')
+        {
+            int k;
+            for (k = 0; stroka[i]; k++, i++)
+                stroka[k] = stroka[i + 1];
+            Complex<int> ss(atof(stroka));
+            dd = atof(degree);
+            Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
+            return temp;
+            break;
+        }
+        /*if (input[i] == 'x')
+        {
+        continue;
+        }*/
+        if (stroka[i] == 'x'&&(stroka[i - 1] >= '0'&&stroka[i - 1] <= '9')&&stroka[i + 1] == '\0')
+        {
+            Complex<int> ss(1);
+            dd = atof(degree);
+            Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
+            return temp;
+            break;
+        }
+        if (stroka[i] == 'x'&&i == 0 && stroka[i + 1] == '\0')
+        {
+            Complex<int> ss(atof(degree));
+            dd = 1;
+            Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
+            return temp;
+            break;
+        }
+        if (stroka[i] == 'x'&&i == 0 && stroka[i + 1] != '\0')
+        {
+            
+            for (int j = 0; stroka[j]; j++)
+            {
+                stroka[j] = stroka[j + 1];
+
+            }
+            Complex<int> ss(atof(degree));
+            dd = 1;
+            Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
+            return temp;
+            break;
+        }
+        degree[p] = stroka[i];
+
+    }
+    else{
+        dd = atof(degree);
+        Complex<int> ss(atof(stroka),0);
+        Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
+        return temp;
+    }
+    
+    
 }

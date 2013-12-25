@@ -20,7 +20,7 @@ public:
     Polynom(Complex<BigInt>, int, int);
     Polynom(Complex<Rational>, int, int);
     Polynom(Complex<double>, int, int);
-
+    Polynom(const Polynom&);
 
     Polynom operator+(Polynom);
     Polynom operator-(Polynom);

@@ -17,6 +17,53 @@ Polynom::Polynom(Complex<int> value, int deg)
     coefD = 0;
 }
 
+
+
+Polynom::Polynom(const Polynom& ist)
+{
+    degree = ist.degree;
+    if (ist.coefI)
+    {
+        coefB = 0;
+        coefR = 0;
+        coefD = 0;
+        coefI = new Complex<int>[1000];
+        for (int i = 0; i <= degree; i++)
+            coefI[i] = ist.coefI[i];
+        //return;
+    }
+    if (ist.coefB)
+    {
+        coefI = 0;
+        coefR = 0;
+        coefD = 0;
+        coefB = new Complex<BigInt>[1000];
+        for (int i = 0; i <= degree; i++)
+            coefB[i] = ist.coefB[i];
+        //return;
+    }
+    if (ist.coefR)
+    {
+        coefB = 0;
+        coefI = 0;
+        coefD = 0;
+        coefR = new Complex<Rational>[1000];
+        for (int i = 0; i <= degree; i++)
+            coefR[i] = ist.coefR[i];
+        //return;
+    }
+    if (ist.coefD)
+    {
+        coefB = 0;
+        coefR = 0;
+        coefI = 0;
+        coefD = new Complex<double>[1000];
+        for (int i = 0; i <= degree; i++)
+            coefD[i] = ist.coefD[i];
+        //return;
+    }
+}
+
 Polynom::Polynom(Complex<BigInt> value, int deg)
 {
     coefB = new Complex<BigInt>[1000];
@@ -30,6 +77,12 @@ Polynom::Polynom(Complex<BigInt> value, int deg)
     coefI = 0;
     coefR = 0;
     coefD = 0;
+}
+
+inline int max(int x, int y)
+{
+    if (x > y) return x;
+    else return y;
 }
 
 Polynom::Polynom(Complex<Rational> value, int deg)
@@ -851,21 +904,21 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
     }*/
     if (pol.coefI)
     {
-        out << pol.coefI;
+        out << *pol.coefI;
         return out;
     }
     if (pol.coefB)
     {
-        out << pol.coefB;
+        out << *pol.coefB;
         return out;
     }
     if (pol.coefR)
     {
-        out << pol.coefR;
+        out << *pol.coefR;
         return out;
         if (pol.coefD)
     {
-        out << pol.coefD;
+        out << *pol.coefD;
         return out;
     }
     }

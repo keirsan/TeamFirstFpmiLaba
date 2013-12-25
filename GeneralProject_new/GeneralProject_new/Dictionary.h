@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Polynom.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
 private: 
 	Node *root;
 	NodeT *rootT;
+	Polynom last;
 public:
 	Dictionary();
 	~Dictionary();
@@ -40,4 +42,5 @@ public:
 	int searchTerm(string str, bool&);
 	void show(Node *root, int level);
 	void delTree(Node *root);
+	Polynom getlast();
 };

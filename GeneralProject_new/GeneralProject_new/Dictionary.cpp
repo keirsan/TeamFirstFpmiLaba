@@ -77,6 +77,7 @@ void Dictionary::addTerm(string str, int value)
 		rootT = new NodeT;
 		rootT->keyT = key;
 		rootT->valueT = value;
+		last = value;
 		rootT->left = rootT->right = 0;
 	}
 
@@ -94,6 +95,7 @@ void Dictionary::addTerm(string str, int value)
 					cur->parent = temp;
 					cur->keyT = key;
 					cur->valueT = value;
+					last = value;
 					cur->right = cur->left = 0;
 				}
 				else cur = cur->right;
@@ -108,6 +110,7 @@ void Dictionary::addTerm(string str, int value)
 					cur->parent = temp;
 					cur->keyT = key;
 					cur->valueT = value;
+					last = value;
 					cur->left = cur->right = 0;
 				}
 				else cur = cur->left;
@@ -181,4 +184,9 @@ void Dictionary::delTree(Node *root)
 			delTree(root->right);
 		delete root;
 	}
+}
+
+Polynom Dictionary::getlast()
+{
+	return last;
 }

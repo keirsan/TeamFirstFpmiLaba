@@ -263,9 +263,9 @@ bool Calc::reading(char expression[])	//find numbers, functions & operations in 
     {
         if(expression[i] == ' ')
 			continue;
-        else if((expression[i] >= '0') && (expression[i] <= '9'))
+        else if ((expression[i] >= '0') && (expression[i] <= '9') || expression[i] == 'x')
             recording_toStack(i, expression);
-        else if(isalpha(expression[i]))
+        else if (isalpha(expression[i])&&expression[i]!='x')
             use_Variable(i, expression);
         else if(expression[i] == '*' || expression[i] == '+' || expression[i] == '-' || expression[i] == '^')
 			realizeOperators(i, expression);

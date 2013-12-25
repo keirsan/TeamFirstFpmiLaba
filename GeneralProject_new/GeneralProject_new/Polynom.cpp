@@ -940,3 +940,18 @@ temp *= value;
 return answer;
 }
 */
+
+Polynom Polynom::operator^(Polynom degree)
+{
+    Polynom temp = *this;
+    Polynom res(1);
+    int deg = degree.coefI[0].Real();
+    while (deg) 
+    {
+        if (deg & 1) 
+            res = res * temp;
+        temp = temp * temp;
+        deg >>= 1;
+    }
+    return res;
+}

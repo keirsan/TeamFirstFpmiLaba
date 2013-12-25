@@ -6,6 +6,7 @@ using namespace std;
 Dictionary::Dictionary()
 { 
 	root = 0;
+	rootT = 0;
 }
 
 Dictionary::~Dictionary()
@@ -67,6 +68,54 @@ void Dictionary::add(int key, string value)
 	}
 }
 
+void Dictionary::addTerm(string str, int value)
+{
+	double key = atof(str.c_str());
+	NodeT *cur = rootT;
+	if(!rootT)
+	{
+		rootT = new NodeT;
+		rootT->keyT = key;
+		rootT->valueT = value;
+		rootT->left = rootT->right = 0;
+	}
+
+	else 
+	{
+		while((cur->right != 0 && cur->left != 0) || sin(cur->keyT) != sin(key))
+		{
+			if(sin(key) > sin(cur->keyT))
+			{
+				if(cur->right == 0)
+				{
+					NodeT *temp = cur;
+					cur->right = new NodeT;
+					cur = cur->right;
+					cur->parent = temp;
+					cur->keyT = key;
+					cur->valueT = value;
+					cur->right = cur->left = 0;
+				}
+				else cur = cur->right;
+			}
+			if(sin(key) < sin(cur->keyT))
+			{
+				if(cur->left == 0)
+				{
+					NodeT *temp = cur;
+					cur->left = new NodeT;
+					cur = cur->left;
+					cur->parent = temp;
+					cur->keyT = key;
+					cur->valueT = value;
+					cur->left = cur->right = 0;
+				}
+				else cur = cur->left;
+			}
+		}
+	}
+}
+
 int Dictionary::search(string value, bool& isOK)
 {
 	Node *cur = root;
@@ -84,6 +133,27 @@ int Dictionary::search(string value, bool& isOK)
 			return cur->key;
 	}
     isOK = false;
+    return 0;
+}
+
+int Dictionary::searchTerm(string str, bool& isOK)
+{
+	double key = atof(str.c_str());
+	NodeT *curr = rootT;
+	while(curr)
+	{
+		if(sin(key) > sin(curr->keyT))
+		{
+			curr = curr->right;
+		}
+		else if(sin(key) < sin(curr->keyT))
+		{
+			curr = curr->left;
+		}
+		else if(sin(curr->keyT) == sin(key))
+			return curr->valueT;
+	}
+	isOK = false;
     return 0;
 }
 

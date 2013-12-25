@@ -169,8 +169,8 @@ Polynom atoP(char* input)
             int k;
             for (k = 0; stroka[i]; k++, i++)
                 stroka[k] = stroka[i + 1];
-            Complex<int> ss(atof(stroka));
-            dd = atof(degree);
+            Complex<int> ss(atof(degree));
+            dd = atof(stroka);
             Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
             return temp;
             break;
@@ -181,15 +181,15 @@ Polynom atoP(char* input)
         }*/
         if (stroka[i] == 'x'&&(stroka[i - 1] >= '0'&&stroka[i - 1] <= '9')&&stroka[i + 1] == '\0')
         {
-            Complex<int> ss(1);
-            dd = atof(degree);
+            Complex<int> ss(atof(degree));
+            dd = 1;
             Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
             return temp;
             break;
         }
         if (stroka[i] == 'x'&&i == 0 && stroka[i + 1] == '\0')
         {
-            Complex<int> ss(atof(degree));
+            Complex<int> ss(1);
             dd = 1;
             Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
             return temp;
@@ -203,8 +203,8 @@ Polynom atoP(char* input)
                 stroka[j] = stroka[j + 1];
 
             }
-            Complex<int> ss(atof(degree));
-            dd = 1;
+            Complex<int> ss(1);
+            dd = atof(stroka);
             Polynom temp(ss, dd, getX());    // degree is 0 by default, x too
             return temp;
             break;

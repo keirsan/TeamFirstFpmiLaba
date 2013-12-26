@@ -459,11 +459,11 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
 
 void Calc::writeOpFirst_toStack(int &start, char expressionConv[], char expression[])        //what we do with '*' and '/'
 {
-    if(operands.size() != 0 && operands.top() == '&')
+    if(operands.size() != 0 && operands.top() == '^')
     {
         expression[point++] = operands.top();
         operands.pop();
-        if(operands.size() != 0 && operands.top() == '^')
+        if(operands.size() != 0 && operands.top() == '&')
         {
             expression[point++] = operands.top();
             operands.pop();
@@ -474,7 +474,7 @@ void Calc::writeOpFirst_toStack(int &start, char expressionConv[], char expressi
             }
         }
     }
-    if(operands.size() != 0 && operands.top() == '^')
+    if(operands.size() != 0 && operands.top() == '&')
     {
         expression[point++] = operands.top();
         operands.pop();
@@ -498,11 +498,11 @@ void Calc::writeOpSecond_toStack(int &start, char expressionConv[], char express
         operands.push('_');
     else
     {
-        if(operands.size() != 0 && operands.top() == '&')
+        if(operands.size() != 0 && operands.top() == '^')
         {
             expression[point++] = operands.top();
             operands.pop();
-            if(operands.size() != 0 && operands.top() == '^')
+            if(operands.size() != 0 && operands.top() == '&')
             {
                 expression[point++] = operands.top();
                 operands.pop();
@@ -518,7 +518,7 @@ void Calc::writeOpSecond_toStack(int &start, char expressionConv[], char express
                 }
             }
         }
-        if(operands.size() != 0 && operands.top() == '^')
+        if(operands.size() != 0 && operands.top() == '&')
         {
             expression[point++] = operands.top();
             operands.pop();
@@ -614,16 +614,6 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
         }        
         else if(expressionConv[i] == '^')
         {
-            if(operands.size() != 0 && operands.top() == '&')
-            {
-                expression[point++] = operands.top();
-                operands.pop();
-                if(operands.size() != 0 && operands.top() == '^')
-                {
-                    expression[point++] = operands.top();
-                    operands.pop();
-                }
-            }
             if(operands.size() != 0 && operands.top() == '^')
             {
                 expression[point++] = operands.top();
@@ -650,6 +640,16 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
                 j--;
             if(i != 0 && expressionConv[i - j] != '*' && expressionConv[i - j] != '-' && expressionConv[i - j] != '+')
             {
+                if(operands.top() == '^')
+                {
+                    expression[point++] = '^';
+                    operands.pop();
+                    if(operands.top() == '&')
+                    {
+                        expression[point++] = '&';
+                        operands.pop();
+                    }
+                }
                 if(operands.top() == '&')
                 {
                     expression[point++] = '&';

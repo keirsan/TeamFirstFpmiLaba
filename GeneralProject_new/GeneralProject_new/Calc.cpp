@@ -308,7 +308,7 @@ void Calc::substitution(int &start, char expression[])
 		{
 			Polynom arg2 = buffer.top();
 			buffer.pop();
-			Polynom result = arg2;//.substitution(arg1);
+			Polynom result = arg1.substitution(arg2);
 			buffer.push(result);
 			for(int i = 0; i < 3; i++)
 		    	expression[start] = ' ';

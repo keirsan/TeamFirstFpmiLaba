@@ -577,6 +577,7 @@ Polynom::Polynom()
 
 std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
+    
     if (pol.coefI)
     {
         for (int i = pol.degree; i >= 0; i--)
@@ -602,6 +603,7 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 
 Polynom Polynom::substitution(Polynom value)
 {
+    ;
     if (coefI && value.coefI)
     {
         Complex<int> temp0(0,0);
@@ -670,7 +672,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefB[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -685,11 +687,12 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefB[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
         *this = answer;
+        cout<<"ANSWER MAZAFAKA " <<answer<<endl;
         return answer;
     }
     if (coefB && value.coefR)
@@ -700,7 +703,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefB[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -715,7 +718,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefB[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -730,7 +733,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefR[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -745,7 +748,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefR[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -760,7 +763,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefR[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -775,7 +778,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefR[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -790,7 +793,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefD[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -805,7 +808,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefD[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -820,7 +823,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefD[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -835,7 +838,7 @@ Polynom Polynom::substitution(Polynom value)
         Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(coefI[i], 0);
+            Polynom curr(coefD[i], 0);
             answer = answer + temp * curr;
             temp = temp * value;
         }
@@ -850,7 +853,7 @@ Polynom Polynom::operator^(Polynom degree)
     Polynom temp = *this;
     Complex<int> temp1(1,0);
     Polynom res(temp1,0);
-    int deg = degree.coefI[0].getRe();
+    int deg = (degree.coefB[0].getRe()).getInt();
     while (deg) 
     {
         if (deg & 1) 

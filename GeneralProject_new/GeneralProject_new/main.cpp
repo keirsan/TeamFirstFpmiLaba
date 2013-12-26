@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
         cin >> str;
         if (str[0] == 'e')
             break;
-        cout << a.result(str);
+        cout << a.result(str) <<endl;
         //Polynom ans = a.result(str).polValue();
         //stringstream ss;
         //ss << ans;

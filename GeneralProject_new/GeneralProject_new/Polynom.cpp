@@ -19,7 +19,6 @@ Polynom::Polynom(const Polynom& ist)
         coefI = new Complex<int>[1000];
         for (int i = 0; i <= degree; i++)
             coefI[i] = ist.coefI[i];
-        //return;
     }
     if (ist.coefB)
     {
@@ -29,7 +28,6 @@ Polynom::Polynom(const Polynom& ist)
         coefB = new Complex<BigInt>[1000];
         for (int i = 0; i <= degree; i++)
             coefB[i] = ist.coefB[i];
-        //return;
     }
     if (ist.coefR)
     {
@@ -39,7 +37,6 @@ Polynom::Polynom(const Polynom& ist)
         coefR = new Complex<Rational>[1000];
         for (int i = 0; i <= degree; i++)
             coefR[i] = ist.coefR[i];
-        //return;
     }
     if (ist.coefD)
     {
@@ -49,7 +46,6 @@ Polynom::Polynom(const Polynom& ist)
         coefD = new Complex<double>[1000];
         for (int i = 0; i <= degree; i++)
             coefD[i] = ist.coefD[i];
-        //return;
     }
 }
 
@@ -107,6 +103,8 @@ Polynom::Polynom(Complex<double> value, int deg)
     coefB = 0;
     coefR = 0;
 }
+
+//Polynom::Polynom(int val)
 
 Polynom Polynom::operator+(Polynom summand)
 {
@@ -846,10 +844,12 @@ Polynom Polynom::substitution(Polynom value)
     }
 }
 
-/*Polynom Polynom::operator^(Polynom degree)
+
+Polynom Polynom::operator^(Polynom degree)
 {
     Polynom temp = *this;
-    Polynom res(1);
+    Complex<int> temp1(1,0);
+    Polynom res(temp1,0);
     int deg = degree.coefI[0].getRe();
     while (deg) 
     {
@@ -859,4 +859,4 @@ Polynom Polynom::substitution(Polynom value)
         deg >>= 1;
     }
     return res;
-}*/
+}

@@ -48,22 +48,23 @@ int main(int argc, char * argv[])
     }
     // run calculator
     int counter = 0;
-    Dictionary dict;
+    //Dictionary dict;
     while (true)
     {
         counter++;
-        cout << "In[" << counter << "]:=";
+        //cout << "In[" << counter << "]:="; до лучших времен
         Calc a;
         char * str = new char[];
         cin >> str;
         if (str[0] == 'e')
             break;
-        Polynom ans = a.result(str).polValue();
-        stringstream ss;
-        ss << ans;
-        string strr = ss.str();
-        dict.add(counter, strr);
-        cout << "Out[" << counter << "]=" << ans << endl;
+        cout << a.result(str);
+        //Polynom ans = a.result(str).polValue();
+        //stringstream ss;
+        //ss << ans;
+        //string strr = ss.str();
+        //dict.add(counter, strr);
+        //cout << "Out[" << counter << "]=" << ans << endl;
     }
 
     return 0;

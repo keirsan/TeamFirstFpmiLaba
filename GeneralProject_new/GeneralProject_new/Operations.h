@@ -39,5 +39,5 @@ double operator*(Rational number1, double number2);
 double operator*(double number1, Rational number2);
 
 
-Polynom atoP(char*);
+//Polynom atoP(char*);
 

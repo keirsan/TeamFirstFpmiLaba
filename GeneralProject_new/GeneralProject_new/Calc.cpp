@@ -1,6 +1,6 @@
 #include"Calc.h"
 
-Dictionary Var;
+//Dictionary Var;
 
 Polynom Calc::atoC(int& start, char expression[])
 {

@@ -1,3 +1,4 @@
+/*
 #include "Dictionary.h"
 #include <iostream>
 #include <string>
@@ -189,4 +190,4 @@ void Dictionary::delTree(Node *root)
 Polynom Dictionary::getlast()
 {
 	return last;
-}
+}*/

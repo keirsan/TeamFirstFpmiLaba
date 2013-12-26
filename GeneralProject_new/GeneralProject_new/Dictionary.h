@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <string>
 #include "Polynom.h"
 
@@ -44,3 +44,4 @@ public:
 	void delTree(Node *root);
 	Polynom getlast();
 };
+*/

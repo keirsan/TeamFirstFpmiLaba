@@ -17,8 +17,6 @@ Polynom::Polynom(Complex<int> value, int deg)
     coefD = 0;
 }
 
-
-
 Polynom::Polynom(const Polynom& ist)
 {
     degree = ist.degree;
@@ -79,11 +77,11 @@ Polynom::Polynom(Complex<BigInt> value, int deg)
     coefD = 0;
 }
 
-inline int max(int x, int y)
-{
-    if (x > y) return x;
-    else return y;
-}
+//inline int max(int x, int y)
+//{
+//    if (x > y) return x;
+//    else return y;
+//}
 
 Polynom::Polynom(Complex<Rational> value, int deg)
 {
@@ -318,7 +316,8 @@ Polynom Polynom::operator+(Polynom summand)
             sum.coefD[i] = coefD[i] + summand.coefD[i];
         return sum;
     }
-    return 0;
+    Polynom null((Complex<int>)0, 0);
+    return null;
 }
 
 Polynom Polynom::operator-(Polynom summand)
@@ -467,7 +466,8 @@ Polynom Polynom::operator-(Polynom summand)
             sum.coefD[i] = coefD[i] - summand.coefD[i];
         return sum;
     }
-    return 0;
+    Polynom null((Complex<int>)0, 0);
+    return null;
 }
 
 Polynom Polynom::operator*(Polynom summand)
@@ -632,7 +632,8 @@ Polynom Polynom::operator*(Polynom summand)
                 sum.coefD[i + j] = sum.coefD[i + j] + coefD[i] * summand.coefD[j];
         return sum;
     }
-    return 0;
+    Polynom null((Complex<int>)0, 0);
+    return null;
 }
 
 
@@ -784,7 +785,8 @@ Polynom Polynom::polValue()
         }
         return result;
     }
-    return 0;
+    Polynom null((Complex<int>)0, 0);
+    return null;
 }
 /*
 void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
@@ -898,23 +900,23 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
     if (pol.coefI)
     {
-        out << *pol.coefI;
+        out<<*pol.coefI;
         return out;
     }
     if (pol.coefB)
     {
-        out << *pol.coefB;
+        out<<*pol.coefB;
         return out;
     }
     if (pol.coefR)
     {
-        out << *pol.coefR;
+        out<<*pol.coefR;
         return out;
-        if (pol.coefD)
-        {
-            out << *pol.coefD;
-            return out;
-        }
+    }
+    if (pol.coefD)
+    {
+        out<<*pol.coefD;
+        return out;
     }
     return out;
 }
@@ -938,7 +940,7 @@ return answer;
 Polynom Polynom::operator^(Polynom degree)
 {
     Polynom temp = *this;
-    Polynom res(1);
+    Polynom res((Complex<int>)1, 0);
     int deg = degree.coefI[0].getRe();
     while (deg) 
     {

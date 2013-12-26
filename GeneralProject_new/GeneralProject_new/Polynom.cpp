@@ -898,25 +898,26 @@ return o;
 
 std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
-    if (pol.coefI)
+    for(int i = pol.degree; i >= 0; i--)
     {
-        out<<*pol.coefI;
-        return out;
-    }
-    if (pol.coefB)
-    {
-        out<<*pol.coefB;
-        return out;
-    }
-    if (pol.coefR)
-    {
-        out<<*pol.coefR;
-        return out;
-    }
-    if (pol.coefD)
-    {
-        out<<*pol.coefD;
-        return out;
+        if (pol.coefI)
+         //   if(pol.coefI[i] != (Complex<int>)0)
+                out<<pol.coefI[i];
+        if (pol.coefB)
+          //  if(pol.coefB[i] != (Complex<BigInt>)0)
+                out<<pol.coefB[i];
+        if (pol.coefR)
+         //   if(pol.coefR[i] != (Complex<Rational>)0)
+                out<<pol.coefR[i];
+        if (pol.coefD)
+         //   if(pol.coefD[i] != (Complex<double>)0)
+                out<<pol.coefD[i];
+        if(i > 1)
+            out<<"x^"<<i;
+        if(i == 1)
+             out<<"x";
+        if(i)
+            out<<" + ";
     }
     return out;
 }
@@ -941,7 +942,7 @@ Polynom Polynom::operator^(Polynom degree)
 {
     Polynom temp = *this;
     Polynom res((Complex<int>)1, 0);
-    int deg = degree.coefI[0].getRe();
+    int deg = degree.coefB[0].getRe().getInt();
     while (deg) 
     {
         if (deg & 1) 

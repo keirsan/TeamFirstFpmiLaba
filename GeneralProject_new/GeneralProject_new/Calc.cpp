@@ -125,7 +125,7 @@ Polynom Calc::atoB(int& start, int length, char expression[])
     BigInt numb0(val);
     Complex<BigInt> numb(numb0, 0);
     Polynom res(numb, 0);
-    start += length;
+    start += length - 1;
     return res;
 }
 
@@ -135,13 +135,17 @@ Polynom Calc::atoR(int& start, int length, char expression[])
     for(int k = 0; k <= length; k++)
         expression[start + k] = ' ';
     int denominator = atoi(expression);
-    int k;
-    for(k = 0; isdigit(expression[start + length + k]); k++)
+    int k = 2;
+    do
+    {        
         expression[start + length + k] = ' ';
+        k++;
+    }
+    while(isdigit(expression[start + length + k]));
     Rational num0(numerator, denominator);
     Complex<Rational> numb(num0, 0);
     Polynom res(numb, 0);
-    start += length + k;
+    start += length + k - 1;
     return res;
 }
 
@@ -225,8 +229,7 @@ void Calc::oper_pow(int &start, char expression[])
             buffer.pop();
             Polynom result = arg2^arg1;
             buffer.push(result);
-            for(int i = 0; i < 3; i++)
-                expression[start] = ' ';
+            expression[start] = ' ';
 		}
 	}
 }
@@ -280,8 +283,7 @@ void Calc::oper_subtr(int &start, char expression[])	// subtraction
 			buffer.pop();
 			Polynom result = arg2 - arg1;
 			buffer.push(result);
-			for(int i = 0; i < 3; i++)
-		    	expression[start] = ' ';
+			expression[start] = ' ';
 		}
 	}
 }
@@ -352,22 +354,20 @@ void Calc::realiseBinOper(int start, char expression[])
 
 void Calc::use_Variable(int & start, char expression[])
 {
-    char n[100];
+    string n;
     int i = 0;
     while(isalpha(expression[start + i]))
     {
-        n[i] = expression[start + i];
+        n += expression[start + i];
         expression[start + i] = ' ';
         i++;
     }
-    n[i] = '\0';
-    double value = Var.search(n, isOK);
+    Polynom x((Complex<int>)0, 0);// = Var.search(n, isOK);
     if(!isOK)
     {
         cout<<"ERROR! You input indefenite variable!"<<endl;
         return;
     }
-    Polynom x((int)value);
     buffer.push(x);
     start += i - 1;
 }
@@ -436,6 +436,7 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
     if(expressionConv[start] == 'x')
     {
         expression[point++] = 'x';
+        expression[point++] = ' ';
         expressionConv[start] = '*';
         writeOpFirst_toStack(start, expressionConv, expression);
     }
@@ -444,6 +445,7 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
     else if(expressionConv[start] == 'i')
     {
         expression[point++] = 'i';
+        expression[point++] = ' ';
         expressionConv[start] = '*';
         writeOpFirst_toStack(start, expressionConv, expression);
     }
@@ -457,21 +459,6 @@ void Calc::inputNumbers(int &start, char expressionConv[], char expression[])
 
 void Calc::writeOpFirst_toStack(int &start, char expressionConv[], char expression[])        //what we do with '*' and '/'
 {
-    if(operands.size() != 0 && operands.top() == '*')
-    {
-        expression[point++] = operands.top();
-        operands.pop();
-    }
-    if(operands.size() != 0 && operands.top() == '^')
-    {
-        expression[point++] = operands.top();
-        operands.pop();
-        if(operands.size() != 0 && operands.top() == '*')
-        {
-            expression[point++] = operands.top();
-            operands.pop();
-        }
-    }
     if(operands.size() != 0 && operands.top() == '&')
     {
         expression[point++] = operands.top();
@@ -487,6 +474,21 @@ void Calc::writeOpFirst_toStack(int &start, char expressionConv[], char expressi
             }
         }
     }
+    if(operands.size() != 0 && operands.top() == '^')
+    {
+        expression[point++] = operands.top();
+        operands.pop();
+        if(operands.size() != 0 && operands.top() == '*')
+        {
+            expression[point++] = operands.top();
+            operands.pop();
+        }
+    }
+    if(operands.size() != 0 && operands.top() == '*')
+    {
+        expression[point++] = operands.top();
+        operands.pop();
+    }    
     operands.push(expressionConv[start]);
 }
 
@@ -496,37 +498,6 @@ void Calc::writeOpSecond_toStack(int &start, char expressionConv[], char express
         operands.push('_');
     else
     {
-        
-        if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
-        {
-            expression[point++] = operands.top();
-            operands.pop();
-        }
-        if(operands.size() != 0 && operands.top() == '*')
-        {
-            expression[point++] = operands.top();
-            operands.pop();
-            if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
-            {
-                expression[point++] = operands.top();
-                operands.pop();
-            }
-        }
-        if(operands.size() != 0 && operands.top() == '^')
-        {
-            expression[point++] = operands.top();
-            operands.pop();
-            if(operands.size() != 0 && (operands.top() == '*' || operands.top() == '/'))
-            {
-                expression[point++] = operands.top();
-                operands.pop();
-                if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
-                {
-                    expression[point++] = operands.top();
-                    operands.pop();
-                }
-            }
-        }
         if(operands.size() != 0 && operands.top() == '&')
         {
             expression[point++] = operands.top();
@@ -546,6 +517,36 @@ void Calc::writeOpSecond_toStack(int &start, char expressionConv[], char express
                     }
                 }
             }
+        }
+        if(operands.size() != 0 && operands.top() == '^')
+        {
+            expression[point++] = operands.top();
+            operands.pop();
+            if(operands.size() != 0 && (operands.top() == '*' || operands.top() == '/'))
+            {
+                expression[point++] = operands.top();
+                operands.pop();
+                if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
+                {
+                    expression[point++] = operands.top();
+                    operands.pop();
+                }
+            }
+        }
+        if(operands.size() != 0 && operands.top() == '*')
+        {
+            expression[point++] = operands.top();
+            operands.pop();
+            if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
+            {
+                expression[point++] = operands.top();
+                operands.pop();
+            }
+        }        
+        if(operands.size() != 0 && (operands.top() == '+' || operands.top() == '-'))
+        {
+            expression[point++] = operands.top();
+            operands.pop();
         }
         operands.push(expressionConv[start]);
     }
@@ -597,8 +598,8 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             inputNumbers(i, expressionConv, expression);            
         else if(expressionConv[i] == 'x')
         {
-            expression[point++] = ' ';
             expression[point++] = 'x';
+            expression[point++] = ' ';
         }
         else if(expressionConv[i] == 'i')
         {
@@ -613,11 +614,6 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
         }        
         else if(expressionConv[i] == '^')
         {
-            if(operands.size() != 0 && operands.top() == '^')
-            {
-                expression[point++] = operands.top();
-                operands.pop();
-            }
             if(operands.size() != 0 && operands.top() == '&')
             {
                 expression[point++] = operands.top();
@@ -628,6 +624,11 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
                     operands.pop();
                 }
             }
+            if(operands.size() != 0 && operands.top() == '^')
+            {
+                expression[point++] = operands.top();
+                operands.pop();
+            }            
             operands.push(expressionConv[i]);
         }
         else if(expressionConv[i] == '*')
@@ -705,7 +706,7 @@ Polynom Calc::result(char expressionConv[])
 {
     isOK = reformation(expressionConv);
     Polynom result((Complex<int>)0, 0);
-    if(isOK && buffer.size() && isInitialization)
+    if(isOK && buffer.size() && !isInitialization)
     {
         result = buffer.top();
         buffer.pop();

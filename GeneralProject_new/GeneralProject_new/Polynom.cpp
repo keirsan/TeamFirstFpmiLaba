@@ -318,6 +318,7 @@ Polynom Polynom::operator+(Polynom summand)
             sum.coefD[i] = coefD[i] + summand.coefD[i];
         return sum;
     }
+    return 0;
 }
 
 Polynom Polynom::operator-(Polynom summand)
@@ -466,6 +467,7 @@ Polynom Polynom::operator-(Polynom summand)
             sum.coefD[i] = coefD[i] - summand.coefD[i];
         return sum;
     }
+    return 0;
 }
 
 Polynom Polynom::operator*(Polynom summand)
@@ -630,6 +632,7 @@ Polynom Polynom::operator*(Polynom summand)
                 sum.coefD[i + j] = sum.coefD[i + j] + coefD[i] * summand.coefD[j];
         return sum;
     }
+    return 0;
 }
 
 
@@ -642,13 +645,13 @@ Polynom::Polynom()
     degree = 0;
 }
 
-Polynom::Polynom(double value)
-{
-    degree = 0;
-    coeff[0] = value;
-    for (int i = 1; i < 1000; i++)
-        coeff[i] = 0;
-}
+//Polynom::Polynom(double value)
+//{
+//    degree = 0;
+//    coeff[0] = value;
+//    for (int i = 1; i < 1000; i++)
+//        coeff[i] = 0;
+//}
 /*
 Polynom::Polynom(const Polynom& pol)
 {
@@ -657,13 +660,13 @@ for (int i = 0; i < 1000; i++)
 coeff[i] = pol.coeff[i];
 }
 */
-Polynom::Polynom(int deg, int val)
-{
-    degree = deg;
-    for (int i = 0; i < 1000; i++)
-        coeff[i] = 0;
-    coeff[deg] = val;
-}
+//Polynom::Polynom(int deg, int val)
+//{
+//    degree = deg;
+//    for (int i = 0; i < 1000; i++)
+//        coeff[i] = 0;
+//    coeff[deg] = val;
+//}
 /*
 void Polynom::setPolynom(int deg)
 {
@@ -697,6 +700,22 @@ isPrinted = true;
 if (!isPrinted)
 std::cout << 0;
 return;
+}*/
+
+/*Polynom Polynom::polValue(Polynom)
+{
+    {
+        Polynom temp(0,1);  
+        Polynom answer;
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(0, coeff[i]);
+            answer = answer + temp * curr;
+            temp *= value;
+        }
+        *this = answer;
+        return answer;
+    }
 }*/
 
 Polynom Polynom::polValue()
@@ -765,6 +784,7 @@ Polynom Polynom::polValue()
         }
         return result;
     }
+    return 0;
 }
 /*
 void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
@@ -890,13 +910,13 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
     {
         out << *pol.coefR;
         return out;
-    }
         if (pol.coefD)
-    {
-        out << *pol.coefD;
-        return out;
+        {
+            out << *pol.coefD;
+            return out;
+        }
     }
-
+    return out;
 }
 /*
 Polynom Polynom::substitution(Polynom value)
@@ -914,3 +934,18 @@ temp *= value;
 return answer;
 }
 */
+
+Polynom Polynom::operator^(Polynom degree)
+{
+    Polynom temp = *this;
+    Polynom res(1);
+    int deg = degree.coefI[0].getRe();
+    while (deg) 
+    {
+        if (deg & 1) 
+            res = res * temp;
+        temp = temp * temp;
+        deg >>= 1;
+    }
+    return res;
+}

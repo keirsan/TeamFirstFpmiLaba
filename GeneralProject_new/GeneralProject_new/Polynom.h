@@ -4,7 +4,7 @@ using namespace std;
 class Polynom
 {
 private:
-    int/*double*/ coeff[1000];
+    //int/*double*/ coeff[1000];
     Complex<int> * coefI;
     Complex<BigInt> * coefB;
     Complex<Rational> * coefR;
@@ -25,15 +25,16 @@ public:
     Polynom operator+(Polynom);
     Polynom operator-(Polynom);
     Polynom operator*(Polynom);
+    Polynom operator^(Polynom);
 
-    Polynom();/*
-    Polynom(const Polynom&);*/
-    Polynom(double);
+    Polynom();
+    Polynom(int);
     Polynom(int deg, int val);
-    /*void getPolynom();
-    void setPolynom(int);*/
+    /*void getPolynom();*/
+    void setPolynom(int);
     Polynom polValue();
-    /*string getString();/*
+    Polynom polValue(Polynom);
+    /*
     void mult(const Polynom&,  const Polynom& );
     void operator=(const Polynom&);
     Polynom operator+(const Polynom&);
@@ -44,6 +45,7 @@ public:
     void operator*=(const Polynom&);
     Polynom substitution(Polynom);
     int& operator[](int);*/
+
     friend std::ostream& operator<<(std::ostream&, const Polynom&);
     /*friend std::istream& operator>>(std::istream&, Polynom&);*/
 };

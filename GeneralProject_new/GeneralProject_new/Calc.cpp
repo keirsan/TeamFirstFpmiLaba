@@ -2,55 +2,104 @@
 
 Dictionary Var;
 
+Polynom Calc::atoC(int& start, char expression[])
+{
+    int len;	// length of quantity
+	bool isFirstFullStop = true;	// is full stop in double firstly received
+    bool isRational = false;
+	for(len = 0; ((expression[start + len] >= '0') && (expression[start + len] <= '9')) || (expression[start + len] == '.'); len++)
+	{
+		if(expression[start + len] == '.')
+        {
+            if(!isFirstFullStop)
+		    {
+			    isOK = false;
+			    break;
+		    }
+			isFirstFullStop = false;
+        }
+        if(expression[start + len  + 1] == '/')
+        	isRational = true;
+	}
+    Polynom part1;
+    if(!isFirstFullStop)
+        part1 = atod(start, len, expression);
+    else if(isRational)
+        part1 = atoR(start, len, expression);
+    else
+        part1 = atoB(start, len, expression);
+    while(expression[start + len] == ' ')
+        len++;
+    if(expression[start + len  + 1] == 'i')
+    {
+        Complex<int> im(0, 1);
+        Polynom im1(im, 0);
+        part1 = part1 * im1;
+    }
+    Polynom part2((Complex<int>)0, 0);
+    start += len;
+    if(expression[start] == '+')
+        expression[start] = ' ';
+    if(expression[start] == '-' || expression[start] == ' ')
+        part2 = atoC(start, expression);
+    return part1 + part2;
+}
+
 void Calc::pushV(char V[], bool& isOK)     
 {
-    isOK = false;
-    double v = 0;
-    char * n = 0;
-    bool isFirst = true;
-    for(int j = 0; V[j]; j++)
-    {            
-        if(V[j] == ' ')
-            continue;
-        if(V[j] == '=' && isFirst)
-        {
-            V[j] = ' ';
-            isFirst = false;
-            continue;
-        }
-        else if(V[j] == '=' && !isFirst)
-        {
-            cout<<"ERROR! Wrong input of variable"<<endl;
-            isOK = false;
-            break;
-        }
-        if(!isOK && isalpha(V[j]))
-        {
-            int len = 1;
-            while(isalpha(V[j + len]))
-                len++;
-            n = new char [len];
-            for(int i = 0; i < len; i++)
+    int j = 0;
+    while(V[j])
+    {
+        isOK = false;
+        Polynom v;
+        char * n = 0;
+        bool isFirst = true;
+        for(; V[j] && V[j] == ','; j++)
+        {            
+            if(V[j] == ' ')
+                continue;
+            if(V[j] == '=' && isFirst)
             {
-                n[i] = V[j + i];
-                V[j + i] = ' ';
+                V[j] = ' ';
+                isFirst = false;
+                continue;
             }
-            n[len] = '\0';
-            isOK = true;
+            else if(V[j] == '=' && !isFirst)
+            {
+                cout<<"ERROR! Wrong input of variable"<<endl;
+                isOK = false;
+                break;
+            }
+            if(!isOK && isalpha(V[j]))
+            {
+                int len = 1;
+                while(isalpha(V[j + len]))
+                    len++;
+                n = new char [len];
+                for(int i = 0; i < len; i++)
+                {
+                    n[i] = V[j + i];
+                    V[j + i] = ' ';
+                }
+                n[len] = '\0';
+                isOK = true;
+            }
+            else if(isOK && (isdigit(V[j]) || V[j] == '-'))
+            {
+                v = atoC(j, V);
+                break;
+            }
+            else
+            {
+                isOK = false;
+                cout<<"ERROR! Wrong input of variable"<<endl;
+                break;
+            }
         }
-        else if(isOK && (isdigit(V[j]) || V[j] == '-'))
-        {
-            v = atof(V);
-            break;
-        }
-        else
-        {
-            isOK = false;
-            cout<<"ERROR! Wrong input of variable"<<endl;
-            break;
-        }
+        if(V[j] == ',')
+            V[j] = ' ';
+//        Var.add(v, n);
     }
-    Var.add((int)v, n);
 }
 
 //----------------------------------------------------------------------------------
@@ -122,9 +171,7 @@ void Calc::recording_toStack(int &start, char expression[])	// push number in st
         x = atoR(start, len, expression);
     else
         x = atoB(start, len, expression);
-    Complex<int> coef(atoi(expression), 0);
 	buffer.push(x);
-	start += len - 1;
 }
 
 //----------------------------------------------------------------------------------
@@ -526,6 +573,7 @@ void Calc::writeCloseBrecket(int &start, char expressionConv[], char expression[
 bool Calc::reformation(char expressionConv[])		// convert normal expression to inverse polish record
 {
     point = 0;
+    isInitialization = false;
     isOK = true;
     length = strlen(expressionConv);
     char * expression;
@@ -586,6 +634,12 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             writeOpFirst_toStack(i, expressionConv, expression);
         else if(expressionConv[i] == '+' || expressionConv[i] == '-')
 		    writeOpSecond_toStack(i, expressionConv, expression);
+        else if(expressionConv[i] == '=')
+        {
+		    pushV(expressionConv, isOK);
+            isInitialization = true;
+            break;
+        }
         else if(expressionConv[i] == '(')
         {
             operands.push('(');
@@ -638,10 +692,11 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
         operands.pop();        
     }
     expression[point++] = '\0';
-    if(isOK)
+    if(isOK && !isInitialization)
         isOK = reading(expression);
-    else
+    else if(!isInitialization)
         cout<<"ERROR! You input wrong expression! You put brackets incorrectly"<<endl;
+    delete [] expression;
     return isOK;
 }
 
@@ -649,8 +704,8 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
 Polynom Calc::result(char expressionConv[])
 {
     isOK = reformation(expressionConv);
-    Polynom result(0);
-    if(isOK && buffer.size())
+    Polynom result((Complex<int>)0, 0);
+    if(isOK && buffer.size() && isInitialization)
     {
         result = buffer.top();
         buffer.pop();

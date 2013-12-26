@@ -648,7 +648,7 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
             int j = 1;
             while(expressionConv[i - j] == ' ')
                 j--;
-            if(expressionConv[i - j] != '*' && expressionConv[i - j] != '-' && expressionConv[i - j] != '+')
+            if(i != 0 && expressionConv[i - j] != '*' && expressionConv[i - j] != '-' && expressionConv[i - j] != '+')
             {
                 if(operands.top() == '&')
                 {

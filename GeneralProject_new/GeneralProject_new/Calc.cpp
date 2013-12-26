@@ -556,11 +556,11 @@ void Calc::writeOpSecond_toStack(int &start, char expressionConv[], char express
 
 void Calc::writeCloseBrecket(int &start, char expressionConv[], char expression[])
 {
-    if(operands.top() == '(')
+    if(operands.size() && operands.top() == '(')
         operands.pop();
     else
     {
-        while(operands.top() != '(')
+        while(operands.size() && operands.top() != '(')
         {
             expression[point++] = operands.top();
             operands.pop();
@@ -640,22 +640,24 @@ bool Calc::reformation(char expressionConv[])		// convert normal expression to i
                 j--;
             if(i != 0 && expressionConv[i - j] != '*' && expressionConv[i - j] != '-' && expressionConv[i - j] != '+')
             {
-                if(operands.top() == '^')
+                operands.pop();
+                if(operands.size() && operands.top() == '^')
                 {
                     expression[point++] = '^';
                     operands.pop();
-                    if(operands.top() == '&')
+                    if(operands.size() && operands.top() == '&')
                     {
                         expression[point++] = '&';
                         operands.pop();
                     }
                 }
-                if(operands.top() == '&')
+                if(operands.size() && operands.top() == '&')
                 {
                     expression[point++] = '&';
                     operands.pop();
                 }
                 operands.push('&');
+                operands.push('(');
             }
         }
         else if(expressionConv[i] == ')')

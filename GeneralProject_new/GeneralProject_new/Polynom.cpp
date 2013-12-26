@@ -603,7 +603,7 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 
 Polynom Polynom::substitution(Polynom value)
 {
-    ;
+    //cout<<" ot "<< *this << " pods " << value <<endl;
     if (coefI && value.coefI)
     {
         Complex<int> temp0(0,0);
@@ -692,7 +692,6 @@ Polynom Polynom::substitution(Polynom value)
             temp = temp * value;
         }
         *this = answer;
-        cout<<"ANSWER MAZAFAKA " <<answer<<endl;
         return answer;
     }
     if (coefB && value.coefR)

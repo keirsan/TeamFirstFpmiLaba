@@ -2,19 +2,10 @@
 #include "Polynom.h"
 #include "BigInt.h"
 
-int Polynom::x = INT_MAX;
-
-Polynom::Polynom(Complex<int> value, int deg)
+inline int max(int x, int y)
 {
-    coefI = new Complex<int>[1000];
-    for (int i = 0; i < 1000; i++)
-        coefI[i] = 0;
-
-    coefI[deg] = value;
-    degree = deg;
-    coefB = 0;
-    coefR = 0;
-    coefD = 0;
+    if (x > y) return x;
+    else return y;
 }
 
 Polynom::Polynom(const Polynom& ist)
@@ -62,6 +53,19 @@ Polynom::Polynom(const Polynom& ist)
     }
 }
 
+Polynom::Polynom(Complex<int> value, int deg)
+{
+    coefI = new Complex<int>[1000];
+    for (int i = 0; i < 1000; i++)
+        coefI[i] = 0;
+
+    coefI[deg] = value;
+    degree = deg;
+    coefB = 0;
+    coefR = 0;
+    coefD = 0;
+}
+
 Polynom::Polynom(Complex<BigInt> value, int deg)
 {
     coefB = new Complex<BigInt>[1000];
@@ -76,12 +80,6 @@ Polynom::Polynom(Complex<BigInt> value, int deg)
     coefR = 0;
     coefD = 0;
 }
-
-//inline int max(int x, int y)
-//{
-//    if (x > y) return x;
-//    else return y;
-//}
 
 Polynom::Polynom(Complex<Rational> value, int deg)
 {
@@ -110,66 +108,6 @@ Polynom::Polynom(Complex<double> value, int deg)
     coefR = 0;
 }
 
-Polynom::Polynom(Complex<int> value, int deg, int xx)
-{
-    coefI = new Complex<int>[1000];
-    for (int i = 0; i < 1000; i++)
-        coefI[i] = 0;
-
-    coefI[deg] = value;
-    degree = deg;
-    coefB = 0;
-    coefR = 0;
-    coefD = 0;
-    x = xx;
-}
-
-Polynom::Polynom(Complex<BigInt> value, int deg, int xx)
-{
-    coefB = new Complex<BigInt>[1000];
-    BigInt zero(0);
-    Complex<BigInt> Czero(zero, zero);
-    for (int i = 0; i < 1000; i++)
-        coefB[i] = Czero;
-
-    coefB[deg] = value;
-    degree = deg;
-    coefI = 0;
-    coefR = 0;
-    coefD = 0;
-    x = xx;
-}
-
-Polynom::Polynom(Complex<Rational> value, int deg, int xx)
-{
-    coefR = new Complex<Rational>[1000];
-    Rational zero(0);
-    for (int i = 0; i < 1000; i++)
-        coefR[i] = zero;
-
-    coefR[deg] = value;
-    degree = deg;
-    coefI = 0;
-    coefB = 0;
-    coefD = 0;
-    x = xx;
-}
-
-Polynom::Polynom(Complex<double> value, int deg, int xx)
-{
-    coefD = new Complex<double>[1000];
-    for (int i = 0; i < 1000; i++)
-        coefD[i] = 0;
-
-    coefD[deg] = value;
-    degree = deg;
-    coefI = 0;
-    coefB = 0;
-    coefR = 0;
-    x = xx;
-}
-
-
 Polynom Polynom::operator+(Polynom summand)
 {
     if (coefI && summand.coefI)
@@ -177,7 +115,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<int> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefI[i] = coefI[i] + summand.coefI[i];
         return sum;
     }
@@ -195,7 +133,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefI[i] + summand.coefR[i];
         return sum;
     }
@@ -204,7 +142,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefI[i] + summand.coefD[i];
         return sum;
     }
@@ -213,7 +151,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<BigInt> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefB[i] = coefB[i] + summand.coefI[i];
         return sum;
     }
@@ -222,7 +160,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<BigInt> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefB[i] = coefB[i] + summand.coefB[i];
         return sum;
     }
@@ -231,7 +169,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefB[i] + summand.coefR[i];
         return sum;
     }
@@ -240,7 +178,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefB[i] + summand.coefD[i];
         return sum;
     }
@@ -249,7 +187,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] + summand.coefI[i];
         return sum;
     }
@@ -258,7 +196,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] + summand.coefB[i];
         return sum;
     }
@@ -267,7 +205,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] + summand.coefR[i];
         return sum;
     }
@@ -276,7 +214,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefR[i] + summand.coefD[i];
         return sum;
     }
@@ -285,7 +223,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] + summand.coefI[i];
         return sum;
     }
@@ -294,7 +232,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] + summand.coefB[i];
         return sum;
     }
@@ -303,7 +241,7 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] + summand.coefR[i];
         return sum;
     }
@@ -312,12 +250,10 @@ Polynom Polynom::operator+(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] + summand.coefD[i];
         return sum;
     }
-    Polynom null((Complex<int>)0, 0);
-    return null;
 }
 
 Polynom Polynom::operator-(Polynom summand)
@@ -327,7 +263,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<int> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefI[i] = coefI[i] - summand.coefI[i];
         return sum;
     }
@@ -336,7 +272,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<BigInt> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefB[i] = coefI[i] - summand.coefB[i];
         return sum;
     }
@@ -345,7 +281,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefI[i] - summand.coefR[i];
         return sum;
     }
@@ -354,7 +290,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefI[i] - summand.coefD[i];
         return sum;
     }
@@ -363,7 +299,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<BigInt> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefB[i] = coefB[i] - summand.coefI[i];
         return sum;
     }
@@ -372,7 +308,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<BigInt> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefB[i] = coefB[i] - summand.coefB[i];
         return sum;
     }
@@ -381,7 +317,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefB[i] - summand.coefR[i];
         return sum;
     }
@@ -390,7 +326,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefB[i] - summand.coefD[i];
         return sum;
     }
@@ -399,7 +335,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] - summand.coefI[i];
         return sum;
     }
@@ -408,7 +344,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] - summand.coefB[i];
         return sum;
     }
@@ -417,7 +353,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<Rational> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefR[i] = coefR[i] - summand.coefR[i];
         return sum;
     }
@@ -426,7 +362,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefR[i] - summand.coefD[i];
         return sum;
     }
@@ -435,7 +371,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] - summand.coefI[i];
         return sum;
     }
@@ -444,7 +380,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] - summand.coefB[i];
         return sum;
     }
@@ -453,7 +389,7 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] - summand.coefR[i];
         return sum;
     }
@@ -462,12 +398,10 @@ Polynom Polynom::operator-(Polynom summand)
         Complex<double> temp(0);
         Polynom sum(temp, 0);
         sum.degree = max(degree, summand.degree);
-        for (int i = 0; i <= degree; i++)
+        for (int i = 0; i <= sum.degree; i++)
             sum.coefD[i] = coefD[i] - summand.coefD[i];
         return sum;
     }
-    Polynom null((Complex<int>)0, 0);
-    return null;
 }
 
 Polynom Polynom::operator*(Polynom summand)
@@ -632,10 +566,7 @@ Polynom Polynom::operator*(Polynom summand)
                 sum.coefD[i + j] = sum.coefD[i + j] + coefD[i] * summand.coefD[j];
         return sum;
     }
-    Polynom null((Complex<int>)0, 0);
-    return null;
 }
-
 
 Polynom::Polynom()
 {
@@ -646,303 +577,280 @@ Polynom::Polynom()
     degree = 0;
 }
 
-//Polynom::Polynom(double value)
-//{
-//    degree = 0;
-//    coeff[0] = value;
-//    for (int i = 1; i < 1000; i++)
-//        coeff[i] = 0;
-//}
-/*
-Polynom::Polynom(const Polynom& pol)
+std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
-degree = pol.degree;
-for (int i = 0; i < 1000; i++)
-coeff[i] = pol.coeff[i];
-}
-*/
-//Polynom::Polynom(int deg, int val)
-//{
-//    degree = deg;
-//    for (int i = 0; i < 1000; i++)
-//        coeff[i] = 0;
-//    coeff[deg] = val;
-//}
-/*
-void Polynom::setPolynom(int deg)
-{
-degree = deg;
-for(int i = 0; i <= degree; i++)
-std::cin >> coeff[i];
-return;
-}
-
-void Polynom::getPolynom()
-{
-bool isPrinted = false;
-for(int i = degree; i >= 0; i--)
-if (coeff[i]!=0)
-{
-if (isPrinted && coeff[i]>=0)
-std::cout << "+";
-if (coeff[i] != -1 && coeff[i] != 1)
-std::cout << coeff[i];
-else
-{
-if (coeff[i] == -1)
-i==0 ? std::cout << -1 :std::cout << "-";
-if (coeff[i] == 1 && i == 0)
-std::cout << 1;
-}
-if (i != 0)
-std::cout << "x^"<<i;
-isPrinted = true;
-}
-if (!isPrinted)
-std::cout << 0;
-return;
-}*/
-
-/*Polynom Polynom::polValue(Polynom)
-{
+    if (pol.coefI)
     {
-        Polynom temp(0,1);  
-        Polynom answer;
+        for (int i = pol.degree; i >= 0; i--)
+            out << "(" << pol.coefI[i]<<")x^"<<i<<" ";
+    }
+    if (pol.coefB)
+    {
+        for (int i = pol.degree; i >= 0; i--)
+            out << "(" << pol.coefB[i]<<")x^"<<i<<" ";
+    }
+    if (pol.coefR)
+    {
+        for (int i = pol.degree; i >= 0; i--)
+            out << "(" << pol.coefR[i]<<")x^"<<i<<" ";
+    }
+    if (pol.coefD)
+    {
+        for (int i = pol.degree; i >= 0; i--)
+            out << "(" << pol.coefD[i]<<")x^"<<i<<" ";
+    }
+    return out;
+}
+
+Polynom Polynom::substitution(Polynom value)
+{
+    if (coefI && value.coefI)
+    {
+        Complex<int> temp0(0,0);
+        Complex<int> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
         for (int i = 0; i <= degree; i++)
         {
-            Polynom curr(0, coeff[i]);
+            Polynom curr(coefI[i], 0);
             answer = answer + temp * curr;
-            temp *= value;
+            temp = temp * value;
         }
         *this = answer;
         return answer;
     }
-}*/
-
-Polynom Polynom::polValue()
-{
-    if (coefI)
+    if (coefI && value.coefB)
     {
-        Complex<int> tempC(0, 0);
-        Complex<int> tempC1(1, 0);
-        int temp = 1;
-        Polynom result(tempC, 0);
-        for(int i = 0; i <= degree;i++)
+        Complex<BigInt> temp0(0,0);
+        Complex<BigInt> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
         {
-            Complex<int> tmp(temp, 0);
-            Complex<int> add = coefI[i] * tmp;
-            Polynom addP(add,0);
-            result = result + addP;
-            temp *= x;
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
         }
-        return result;
+        *this = answer;
+        return answer;
     }
-    if (coefB)
+    if (coefI && value.coefR)
     {
-        Complex<BigInt> tempC(0, 0);
-        Complex<BigInt> tempC1(1, 0);
-        int temp = 1;
-        Polynom result(tempC, 0);
-        for(int i = 0; i <= degree;i++)
+        Complex<Rational> temp0(0,0);
+        Complex<Rational> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
         {
-            Complex<int> tmp(temp, 0);
-            Complex<BigInt> add = coefB[i] * tmp;
-            Polynom addP(add,0);
-            result = result + addP;
-            temp *= x;
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
         }
-        return result;
+        *this = answer;
+        return answer;
     }
-    if (coefR)
+    if (coefI && value.coefD)
     {
-        Complex<Rational> tempC(0, 0);
-        Complex<Rational> tempC1(1, 0);
-        int temp = 1;
-        Polynom result(tempC, 0);
-        for(int i = 0; i <= degree;i++)
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
         {
-            Complex<int> tmp(temp, 0);
-            Complex<Rational> add = coefR[i] * tmp;
-            Polynom addP(add,0);
-            result = result + addP;
-            temp *= x;
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
         }
-        return result;
+        *this = answer;
+        return answer;
     }
-    if (coefD)
+    if (coefB && value.coefI)
     {
-        Complex<int> tempC(0, 0);
-        Complex<double> tempC1(1, 0);
-        int temp = 1;
-        Polynom result(tempC, 0);
-        for(int i = 0; i <= degree;i++)
+        Complex<BigInt> temp0(0,0);
+        Complex<BigInt> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
         {
-            Complex<int> tmp(temp, 0);
-            Complex<double> add = coefD[i] * tmp;
-            Polynom addP(add,0);
-            result = result + addP;
-            temp *= x;
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
         }
-        return result;
+        *this = answer;
+        return answer;
     }
-    Polynom null((Complex<int>)0, 0);
-    return null;
-}
-/*
-void Polynom::mult(const Polynom & pol1, const Polynom & pol2)
-{
-for(int i=0;i <= pol1.degree;i++)
-for(int j=0; j <= pol2.degree;j++)
-coeff[i+j] += (pol1.coeff[i]*pol2.coeff[j]);
-degree = pol1.degree + pol2.degree;
-
-}
-
-void Polynom::operator=(const Polynom& pol)
-{
-degree = pol.degree;
-for (int i = 0; i < 1000; i++)
-coeff[i] = pol.coeff[i];
-}
-Polynom Polynom::operator+(const Polynom& pol)
-{
-int max;
-max = (pol.degree > degree ? pol.degree : degree);
-Polynom sum;
-for(int i = 0; i <= max; i++)
-sum.coeff[i] = coeff[i] + pol.coeff[i];
-
-sum.degree = max;
-while (sum.coeff[sum.degree] == 0)
-sum.degree--;
-
-return sum;
-}
-
-void Polynom::operator+=(const Polynom& pol)
-{
-int max;
-max = (pol.degree > degree ? pol.degree : degree);
-for(int i = 0; i <= max; i++)
-coeff[i]+= pol.coeff[i];
-
-degree = max;
-while (coeff[degree] == 0)
-degree--;
-
-}
-Polynom Polynom::operator-(const Polynom& pol)
-{
-int max;
-max = (pol.degree > degree ? pol.degree : degree);
-Polynom diff;
-for(int i = 0; i <= max; i++)
-diff.coeff[i] = coeff[i] - pol.coeff[i];
-
-diff.degree = max;
-while (diff.coeff[diff.degree] == 0)
-diff.degree--;
-
-return diff;
-}
-
-void Polynom::operator-=(const Polynom& pol)
-{
-int max;
-max = (pol.degree > degree ? pol.degree : degree);
-for(int i = 0; i <= max; i++)
-coeff[i]-= pol.coeff[i];
-
-degree = max;
-while (coeff[degree] == 0)
-degree--;
-
-}
-
-Polynom Polynom::operator*(const Polynom& pol)
-{
-Polynom prod;
-for(int i = 0;i <= pol.degree; i++)
-for(int j=0; j <= degree;j++)
-prod.coeff[i+j] += (pol.coeff[i]*coeff[j]);
-prod.degree = pol.degree + degree;
-
-return prod;
-}
-
-void Polynom::operator*=(const Polynom& pol)
-{
-Polynom prod;
-for(int i = 0;i <= pol.degree; i++)
-for(int j=0; j <= degree;j++)
-prod.coeff[i+j] += (pol.coeff[i]*coeff[j]);
-prod.degree =degree + pol.degree;
-*this = prod;
-}
-
-int& Polynom::operator[](int i)
-{
-if((i < 0) || (i >= 10000))
-std::cout << "Please, don't try to break my cute program((((" << std::endl;
-return coeff[i];
-}
-
-std::istream& operator>>(std::istream& o, Polynom& pol)
-{
-o >> pol.degree;
-for (int i = 0; i <= pol.degree; i++)
-o >> pol.coeff[i];
-return o;
-}
-*/
-
-std::ostream& operator<<(std::ostream& out, const Polynom& pol)
-{
-    for(int i = pol.degree; i >= 0; i--)
+    if (coefB && value.coefB)
     {
-        if (pol.coefI)
-         //   if(pol.coefI[i] != (Complex<int>)0)
-                out<<pol.coefI[i];
-        if (pol.coefB)
-          //  if(pol.coefB[i] != (Complex<BigInt>)0)
-                out<<pol.coefB[i];
-        if (pol.coefR)
-         //   if(pol.coefR[i] != (Complex<Rational>)0)
-                out<<pol.coefR[i];
-        if (pol.coefD)
-         //   if(pol.coefD[i] != (Complex<double>)0)
-                out<<pol.coefD[i];
-        if(i > 1)
-            out<<"x^"<<i;
-        if(i == 1)
-             out<<"x";
-        if(i)
-            out<<" + ";
+        Complex<BigInt> temp0(0,0);
+        Complex<BigInt> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
     }
-    return out;
+    if (coefB && value.coefR)
+    {
+        Complex<Rational> temp0(0,0);
+        Complex<Rational> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefB && value.coefD)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefR && value.coefI)
+    {
+        Complex<Rational> temp0(0,0);
+        Complex<Rational> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefR && value.coefB)
+    {
+        Complex<Rational> temp0(0,0);
+        Complex<Rational> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefR && value.coefR)
+    {
+        Complex<Rational> temp0(0,0);
+        Complex<Rational> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefR && value.coefD)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefD && value.coefI)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefD && value.coefB)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefD && value.coefR)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
+    if (coefD && value.coefD)
+    {
+        Complex<double> temp0(0,0);
+        Complex<double> temp1(1,0);
+        Polynom temp(temp1,0);
+        Polynom answer(temp0,0);
+        for (int i = 0; i <= degree; i++)
+        {
+            Polynom curr(coefI[i], 0);
+            answer = answer + temp * curr;
+            temp = temp * value;
+        }
+        *this = answer;
+        return answer;
+    }
 }
-/*
-Polynom Polynom::substitution(Polynom value)
-{
-Polynom temp(0,1);
-Polynom answer;
-;
-for (int i = 0; i <= degree; i++)
-{
-Polynom curr(0, coeff[i]);
-answer += temp * curr;
-temp *= value;
-}
-*this = answer;
-return answer;
-}
-*/
 
-Polynom Polynom::operator^(Polynom degree)
+/*Polynom Polynom::operator^(Polynom degree)
 {
     Polynom temp = *this;
-    Polynom res((Complex<int>)1, 0);
-    int deg = degree.coefB[0].getRe().getInt();
+    Polynom res(1);
+    int deg = degree.coefI[0].getRe();
     while (deg) 
     {
         if (deg & 1) 
@@ -951,4 +859,4 @@ Polynom Polynom::operator^(Polynom degree)
         deg >>= 1;
     }
     return res;
-}
+}*/

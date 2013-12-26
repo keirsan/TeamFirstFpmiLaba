@@ -27,6 +27,7 @@ class Calc
     void oper_pow(int &, char expression[]);
     void oper_addit(int &, char expression[]);
     void oper_subtr(int &, char expression[]);
+    void substitution(int &, char expression[]);
     void realizeOperators(int &, char expression[]);
     void realiseBinOper(int, char expression[]);
     

@@ -104,8 +104,6 @@ Polynom::Polynom(Complex<double> value, int deg)
     coefR = 0;
 }
 
-//Polynom::Polynom(int val)
-
 Polynom Polynom::operator+(Polynom summand)
 {
     if (coefI && summand.coefI)
@@ -575,6 +573,20 @@ Polynom::Polynom()
     degree = 0;
 }
 
+std::ostream& x(std::ostream& out, int deg)
+{
+    ;
+    if (deg == 0)
+        return out;
+    if (deg == 1)
+    {
+        out << "x ";
+        return out;
+    }
+    out << "x^" << deg <<" ";
+    return out;
+}
+
 std::ostream& operator<<(std::ostream& out, const Polynom& pol)
 {
     
@@ -585,18 +597,153 @@ std::ostream& operator<<(std::ostream& out, const Polynom& pol)
     }
     if (pol.coefB)
     {
+        bool wp = 0;
         for (int i = pol.degree; i >= 0; i--)
-            out << "(" << pol.coefB[i]<<")x^"<<i<<" ";
+        {
+            if ((pol.coefB[i].getRe()>0 || pol.coefB[i].getRe()<0) && (pol.coefB[i].getIm()>0 || pol.coefB[i].getIm()<0))
+            {
+                if (wp)
+                    out << "+ ";
+                out << "(" << pol.coefB[i]<< ")" ;
+                x(out,i);//")x^"<<i<<" ";
+                wp = 1;
+                continue;
+            }
+            if (pol.coefB[i].getRe() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefB[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefB[i].getRe() < 0)
+            {
+                out << pol.coefB[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefB[i].getIm() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefB[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefB[i].getIm() < 0)
+            {
+                out << pol.coefB[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+        }
+        if (!wp)
+            out << 0;    
     }
     if (pol.coefR)
     {
+        bool wp = 0;
         for (int i = pol.degree; i >= 0; i--)
-            out << "(" << pol.coefR[i]<<")x^"<<i<<" ";
+        {
+            if ((pol.coefR[i].getRe()>0 || pol.coefR[i].getRe()<0) && (pol.coefR[i].getIm()>0 || pol.coefR[i].getIm()<0))
+            {
+                if (wp)
+                    out << "+ ";
+                out << "(" << pol.coefR[i]<< ")";
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefR[i].getRe() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefR[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefR[i].getRe() < 0)
+            {
+                out << pol.coefR[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefB[i].getIm() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefR[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefR[i].getIm() < 0)
+            {
+                out << pol.coefR[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+        }
+        if (!wp)
+            out << 0;
     }
     if (pol.coefD)
     {
+        bool wp = 0;
         for (int i = pol.degree; i >= 0; i--)
-            out << "(" << pol.coefD[i]<<")x^"<<i<<" ";
+        {
+            if ((pol.coefD[i].getRe()>0 || pol.coefD[i].getRe()<0) && (pol.coefD[i].getIm()>0 || pol.coefD[i].getIm()<0))
+            {
+                if (wp)
+                    out << "+ ";
+                out << "(" << pol.coefD[i]<<")";
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefD[i].getRe() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefD[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefD[i].getRe() < 0)
+            {
+                out << pol.coefD[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefD[i].getIm() > 0)
+            {
+                if (wp)
+                    out << "+ ";
+                out << pol.coefD[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+            if (pol.coefD[i].getIm() < 0)
+            {
+                out << pol.coefD[i];
+                x(out,i);
+                wp = 1;
+                continue;
+            }
+        }
+        if (!wp)
+            out << 0;
     }
     return out;
 }

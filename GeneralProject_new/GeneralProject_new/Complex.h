@@ -18,6 +18,10 @@ public:
     {
         return re;
     }
+    type1 getIm()
+    {
+        return im;
+    }
     Complex();
     Complex(type1 r, type1 i);
     Complex(type1 r);

@@ -66,6 +66,6 @@ int main(int argc, char * argv[])
         //dict.add(counter, strr);
         //cout << "Out[" << counter << "]=" << ans << endl;
     }
-
+	
     return 0;
 }

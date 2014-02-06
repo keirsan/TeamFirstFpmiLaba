@@ -69,7 +69,7 @@ void Dictionary::add(int key, string value)
 	}
 }
 
-void Dictionary::addTerm(string str, int value)
+void Dictionary::addTerm(string str, Polynom value)
 {
 	double key = atof(str.c_str());
 	NodeT *cur = rootT;
@@ -140,7 +140,7 @@ int Dictionary::search(string value, bool& isOK)
     return 0;
 }
 
-int Dictionary::searchTerm(string str, bool& isOK)
+Polynom Dictionary::searchTerm(string str, bool& isOK)
 {
 	double key = atof(str.c_str());
 	NodeT *curr = rootT;
@@ -158,7 +158,7 @@ int Dictionary::searchTerm(string str, bool& isOK)
 			return curr->valueT;
 	}
 	isOK = false;
-    return 0;
+    //return 0;    -что вернуть здесь?
 }
 
 void Dictionary::show(Node *root, int level)

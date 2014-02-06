@@ -19,7 +19,7 @@ public:
 	struct NodeT
 	{
 		double keyT;
-		int valueT;
+		Polynom valueT;
 		NodeT *left;
 		NodeT *right;
 		NodeT *parent;
@@ -37,9 +37,9 @@ public:
 	NodeT *getRootT()
 	{ return rootT;}
 	void add(int value, string c);
-	void addTerm(string key, int value);
+	void addTerm(string key, Polynom value);
 	int search(string value, bool&);
-	int searchTerm(string str, bool&);
+	Polynom searchTerm(string str, bool&);
 	void show(Node *root, int level);
 	void delTree(Node *root);
 	Polynom getlast();
